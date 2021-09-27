@@ -37,7 +37,6 @@ export class AppComponent implements OnInit{
   }
 
   public onAddParticipant(addForm: NgForm): void {
-    document.getElementById('add-participant-form')?.click();
     this.particantService.addParticipant(addForm.value).subscribe(
       (response: Participant) => {
         console.log(response);
