@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'regulamin', component: RegulaminComponent },
   { path: 'adding-presence', component: AddingPresenceComponent },
+  { path: '', redirectTo: 'adding-participants', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -29,4 +30,13 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const routingComponents = [AddingParticipantsComponent, AddingGroupsComponent, AddingAchievementsComponent, AddingWorksComponent, AdminComponent, LoginComponent, PolitykaComponent, RegistrationComponent, RegulaminComponent, AddingPresenceComponent]
+export const routingComponents = [AddingParticipantsComponent, 
+    AddingGroupsComponent, 
+    AddingAchievementsComponent, 
+    AddingWorksComponent, 
+    AdminComponent, 
+    LoginComponent, 
+    PolitykaComponent, 
+    RegistrationComponent, 
+    RegulaminComponent, 
+    AddingPresenceComponent]
