@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 import { ParticipantService } from './participant.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { ToDoComponent } from './to-do/to-do.component';
+import { GenerateReportComponent } from './generate-report/generate-report.component';
+import { MainComponent } from './main/main.component';
 
 
 @NgModule({
@@ -17,6 +20,9 @@ import { FooterComponent } from './footer/footer.component';
     routingComponents,
     NavbarComponent,
     FooterComponent,
+    ToDoComponent,
+    GenerateReportComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
