@@ -10,6 +10,8 @@ import { LoginComponent } from './login/login.component';
 import { PolitykaComponent } from './polityka/polityka.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { RegulaminComponent } from './regulamin/regulamin.component';
+import { ToDoComponent } from './to-do/to-do.component';
+import { ToDoService } from './to-do/to-do.service';
 
 const routes: Routes = [
   { path: 'adding-participants', component: AddingParticipantsComponent },
@@ -22,6 +24,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'regulamin', component: RegulaminComponent },
   { path: 'adding-presence', component: AddingPresenceComponent },
+  { path: 'to-do', component: ToDoComponent},
   { path: '', redirectTo: 'adding-participants', pathMatch: 'full'}
 ];
 
@@ -39,4 +42,5 @@ export const routingComponents = [AddingParticipantsComponent,
     PolitykaComponent, 
     RegistrationComponent, 
     RegulaminComponent, 
-    AddingPresenceComponent]
+    AddingPresenceComponent,
+  ToDoComponent]

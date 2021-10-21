@@ -1,1 +1,137 @@
-<p>to-do works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor03">
+       <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+              <a class="nav-link" (click)="onOpenModal(null, 'add')">Add To Do <span class="sr-only">(current)</span></a>
+          </li>
+       </ul>
+       <form class="form-inline my-2 my-lg-0">
+          <input type="search" (ngModelChange)="searchTodos(key.value)" #key="ngModel" ngModel
+          name= "key" id="searchName" class="form-control mr-sm-2" placeholder="Search to do..." required>
+       </form>
+    </div>
+  </nav>
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <div class="container" id="main.container">
+      <div class="row">
+          <div *ngFor="let todo of todos" class="col-md-6 col-xl-3">
+              <div class="card m-b-30">
+                  <div class="card-body row">
+                      <div class="col-6 card-title align-self-center mb-0">
+                          <h5>{{todo?.message}}</h5>
+                      </div> 
+                  </div>
+                  <!-- <ul class="list-group list-group-flush">
+                      <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Participant : {{participant?.email}}</li>
+                      
+                  </ul> -->
+                  <div class="card-body">
+                      <div class="float-right btn-group btn-group-sm">
+                          <a (click)="onOpenModal(todo, 'edit')" href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                          <a (click)="onOpenModal(todo, 'delete')" href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                      </div>
+                      <ul class="social-links list-inline mb-0">
+                          <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Facebook"><i class="fa fa-facebook-f"></i></a></li>
+                          <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                          <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Skype"><i class="fa fa-skype"></i></a></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+          
+         
+     
+  
+          <!-- Add ToDo Modal -->
+  <div class="modal fade" id="addToDoModal" tabindex="-1" role="dialog" aria-labelledby="addToDoModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           <div class="modal-header">
+              <h5 class="modal-title" id="addToDoModalLabel">Add To Do</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+           </div>
+           <div class="modal-body">
+              <form #addForm="ngForm" (ngSubmit)="onAddToDo(addForm)">
+              <div class="form-group">
+                 <label for="message">message</label>
+                 <input type="text" ngModel name="message" class="form-control" id="message" placeholder="message" required>
+              </div>
+              <div class="modal-footer">
+                 <button type="button" id="add-todo-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                 <button (click)="onAddToDo(addForm)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+              </div>
+              </form>
+           </div>
+        </div>
+      </div>
+      </div>
+  
+  
+  
+      <!-- Edit Modal -->
+  <div class="modal fade" id="updateToDoModal" tabindex="-1" role="dialog" aria-labelledby="todoEditModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="updateToDoModalLabel">Edit To Do {{editToDo?.message}}</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <form #editForm="ngForm">
+                  <div class="form-group">
+                     <label for="message">message</label>
+                     <input type="text" ngModel="{{editToDo?.message}}" name="message" class="form-control" id="message" aria-describedby="emailHelp" placeholder="Message">
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                     <button (click)="onUpdateToDo(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+    </div>
+  
+  
+  
+  
+    <!-- Delete Modal -->
+  <div class="modal fade" id="deleteToDoModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="deleteModelLabel">Delete To Do</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <p>Are you sure you want to delete to do {{deleteToDo?.message}}?</p>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                  <button (click)="onDeleteToDo(deleteToDo?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+               </div>
+            </div>
+         </div>
+      </div>
+    </div>
+    </div>
+  
+  
+    <!-- Notification for no todo -->
+  <div *ngIf="todos?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+      <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">NO TO DO!</h4>
+        <p>No to do were found.</p>
+      </div>
+      </div>
+  

@@ -28,8 +28,7 @@
                   </div>
                   <ul class="list-group list-group-flush">
                       <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Number : {{group?.number}}</li>
-                      <li class="list-group-item"><i class="fa fa-phone float-right"></i>Number of participants : {{group?.numberOfParticipant}}</li>
-                  </ul>
+                       </ul>
                   <div class="card-body">
                       <div class="float-right btn-group btn-group-sm">
                           <a (click)="onOpenModal(group, 'edit')" href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
@@ -67,10 +66,6 @@
                  <label for="email">Number</label>
                  <input type="email" ngModel name="number" class="form-control" id="number" placeholder="Number" required>
               </div>
-              <div class="form-group">
-                 <label for="phone">numberOfParticipant</label>
-                 <input type="text" ngModel name="numberOfParticipant" class="form-control" id="numberOfParticipant" placeholder="NumberOfParticipant" required>
-              </div>
               <div class="modal-footer">
                  <button type="button" id="add-group-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
                  <button (click)="onAddGroup(addForm)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
@@ -104,10 +99,6 @@
                   <div class="form-group">
                      <label for="number">Number</label>
                      <input type="number" ngModel="{{editGroup?.number}}" name="number" class="form-control" id="number" placeholder="Number">
-                  </div>
-                  <div class="form-group">
-                     <label for="numberOfParticipant">NumberOfParticipant</label>
-                     <input type="number" ngModel="{{editGroup?.numberOfParticipant}}" name="numberOfParticipant" class="form-control" id="numberOfParticipant" name="numberOfParticipant" placeholder="numberOfParticipant">
                   </div>
                   <div class="modal-footer">
                      <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>

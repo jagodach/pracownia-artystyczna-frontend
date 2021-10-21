@@ -77,8 +77,7 @@ public searchGroups(key: string): void {
   const results: Group[] = [];
   for (const group of this.groups) {
     if (group.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
-    || group.number.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1
-    || group.numberOfParticipant.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+    || group.number.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1 ){
       results.push(group);
     }
   }

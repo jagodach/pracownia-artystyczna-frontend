@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ParticipantService } from '../participant.service';
-import { Participant } from '../participant';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import { ParticipantService } from './participant.service';
+import { Participant } from './participant';
 
 @Component({
   selector: 'app-adding-participants',
@@ -21,6 +21,7 @@ export class AddingParticipantsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllParticipant();
   }
 
   public getAllParticipant(): void {
