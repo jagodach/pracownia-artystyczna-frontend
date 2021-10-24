@@ -4,5 +4,6 @@ export interface Participant{
     email: string;
     phone: string;
     url: string;
+    group: string;
     participantCode: string;
 }

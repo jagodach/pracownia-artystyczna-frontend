@@ -21,6 +21,7 @@ public deleteGroup: Group;
       }
 
   ngOnInit(): void {
+    this.getAllGroup();
   }
 
 

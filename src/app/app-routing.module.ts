@@ -25,7 +25,8 @@ const routes: Routes = [
   { path: 'regulamin', component: RegulaminComponent },
   { path: 'adding-presence', component: AddingPresenceComponent },
   { path: 'to-do', component: ToDoComponent},
-  { path: '', redirectTo: 'adding-participants', pathMatch: 'full'}
+  { path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: 'participants', redirectTo: 'adding-participants', pathMatch: 'full'}
 ];
 
 @NgModule({

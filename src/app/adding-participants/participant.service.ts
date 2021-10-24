@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Participant } from './participant';
+import { ParticipantDto } from './participantDto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,9 @@ export class ParticipantService {
     return this.http.get<Participant[]>(`${this.apiServerUrl}/participant/all`);
   }
 
-  public addParticipant(participant: Participant): Observable<Participant> {
+  public addParticipant(participant: ParticipantDto): Observable<ParticipantDto> {
     console.log(participant);
-    return this.http.post<Participant>(`${this.apiServerUrl}/participant/add`, participant);
+    return this.http.post<ParticipantDto>(`${this.apiServerUrl}/participant/add`, participant);
   }
 
   public updateParticipant(participant: Participant): Observable<Participant> {

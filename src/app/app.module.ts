@@ -13,6 +13,9 @@ import { GenerateReportComponent } from './generate-report/generate-report.compo
 import { MainComponent } from './main/main.component';
 import { ParticipantService } from './adding-participants/participant.service';
 import { RegistereduserComponent } from './registereduser/registereduser.component';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BearerAuthInterceptor } from 'src/BearerAuthInterceptor';
 
 
 @NgModule({
@@ -32,7 +35,12 @@ import { RegistereduserComponent } from './registereduser/registereduser.compone
     HttpClientModule,
     FormsModule
   ],
-  providers: [ParticipantService],
+  providers: [
+    ParticipantService, 
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, 
+    { provide: HTTP_INTERCEPTORS, useClass: BearerAuthInterceptor, multi: true },
+    JwtHelperService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
