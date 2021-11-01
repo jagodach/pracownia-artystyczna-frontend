@@ -63,6 +63,14 @@
                  <label for="message">message</label>
                  <input type="text" ngModel name="message" class="form-control" id="message" placeholder="message" required>
               </div>
+
+              <div class="form-participant">
+               <label for="participant">Uczestnik</label>
+               <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Participant"
+                  required>
+               <datalist id="participants"></datalist>
+            </div>
+
               <div class="modal-footer">
                  <button type="button" id="add-todo-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
                  <button (click)="onAddToDo(addForm)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>

@@ -24,7 +24,7 @@ export class AddingParticipantsComponent implements OnInit {
     this.participants = [];
     this.editParticipant = {} as Participant;
     this.deleteParticipant = {} as Participant;
-    this.groups = {} as Group[];
+    this.groups = [];
   }
 
   ngOnInit(): void {
@@ -68,8 +68,11 @@ export class AddingParticipantsComponent implements OnInit {
 
 
   public onUpdateParticipant(participant: Participant): void {
+    delete participant.participantCode;
+    let participantDto: ParticipantDto = participant;
+    console.log(participant);
     this.particantService.updateParticipant(participant).subscribe(
-      (response: Participant) => {
+      (response: ParticipantDto) => {
         console.log(response);
         this.getAllParticipant();
       },
@@ -136,13 +139,27 @@ export class AddingParticipantsComponent implements OnInit {
     if (mode == 'edit') {
       this.editParticipant = participant;
       button.setAttribute('data-target', '#updateParticipantModal');
+      this.groupService.getAllGroup().subscribe(
+        (response: Group[]) => {
+          this.groups = response;
+          const list = document.getElementById('groups');
+          for (let index = 0; index < this.groups.length; index++) {
+            let option = document.createElement('option');
+            option.value = this.groups[index].name;
+            list?.appendChild(option);
+          }
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
     }
 
     if (mode == 'delete') {
       this.deleteParticipant = participant;
       button.setAttribute('data-target', '#deleteParticipantModal');
+ 
     }
-
     container?.appendChild(button);
     button.click();
   }

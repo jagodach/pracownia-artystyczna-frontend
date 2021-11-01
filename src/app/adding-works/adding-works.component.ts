@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Participant } from '../adding-participants/participant';
+import { ParticipantService } from '../adding-participants/participant.service';
 import { Work } from './work';
 import { WorkService } from './work.service';
 
@@ -13,14 +15,30 @@ export class AddingWorksComponent implements OnInit {
   public works: Work[];
   public editWork: Work;
   public deleteWork: Work;
+  public participants: Participant[];
 
-  constructor(private workService: WorkService) { 
+  constructor(private workService: WorkService,
+    private participantService: ParticipantService) { 
     this.works = [];
     this.editWork = {} as Work;
     this.deleteWork = {} as Work;
+    this.participants = [];
   }
 
   ngOnInit(): void {
+    this.getAllWork;
+  }
+
+  public getAllParticipants(): void{
+    this.participantService.getAllParticipant().subscribe(
+  (response: Participant[]) => {
+    this.participants = response;
+    console.log(this.participants);
+  },
+  (error: HttpErrorResponse) =>{
+    alert(error.message);
+  }
+  );
   }
 
   public getAllWork(): void {
@@ -95,6 +113,22 @@ export class AddingWorksComponent implements OnInit {
     button.setAttribute('data-toggle', 'modal');
     if(mode == 'add'){
     button.setAttribute('data-target', '#addWorkModal');
+
+    this.participantService.getAllParticipant().subscribe(
+      (response: Participant[]) => {
+        this.participants = response;
+        const list = document.getElementById('participants');
+        for (let index = 0; index < this.participants.length; index++) {
+          let option = document.createElement('option');
+          option.value = this.participants[index].name;
+          list?.appendChild(option);
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+
     }
     if(mode == 'edit'){
       this.editWork=work;

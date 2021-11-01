@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Presence } from './presence';
 import { environment } from 'src/environments/environment';
+import { PresenceDto } from './presenceDto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,9 @@ export class PresenceService {
     return this.http.get<Presence[]>(`${this.apiServerUrl}/presence/all`);
   }
 
-  public addPresence(presence: Presence): Observable<Presence> {
-    return this.http.post<Presence>(`${this.apiServerUrl}/presence/add`, presence);
+  public addPresence(presence: PresenceDto): Observable<PresenceDto> {
+    console.log(presence);
+    return this.http.post<PresenceDto>(`${this.apiServerUrl}/presence/add`, presence);
   }
 
   public updatePresence(presence: Presence): Observable<Presence> {

@@ -22,8 +22,8 @@ export class ParticipantService {
     return this.http.post<ParticipantDto>(`${this.apiServerUrl}/participant/add`, participant);
   }
 
-  public updateParticipant(participant: Participant): Observable<Participant> {
-    return this.http.put<Participant>(`${this.apiServerUrl}/participant/update`, participant);
+  public updateParticipant(participant: ParticipantDto): Observable<ParticipantDto> {
+    return this.http.put<ParticipantDto>(`${this.apiServerUrl}/participant/update`, participant);
   }
 
   public deleteParticipant(participantId: number): Observable<void> {

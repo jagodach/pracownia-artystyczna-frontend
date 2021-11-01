@@ -1,8 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Participant } from '../adding-participants/participant';
 import { Presence } from './presence';
 import { PresenceService } from './presence.service';
+import { PresenceDto } from './presenceDto';
+import { ParticipantService } from '../adding-participants/participant.service';
 
 @Component({
   selector: 'app-adding-presence',
@@ -13,14 +16,30 @@ export class AddingPresenceComponent implements OnInit {
   public presences: Presence[];
   public editPresence: Presence;
   public deletePresence: Presence;
+  public participants: Participant[];
 
-  constructor(private presenceService: PresenceService) {
+  constructor(private presenceService: PresenceService,
+    private participantService: ParticipantService) {
     this.presences = [];
     this.editPresence = {} as Presence;
     this.deletePresence = {} as Presence; 
+    this.participants = {} as Participant[];
    }
 
   ngOnInit(): void {
+    this.getAllPresence();
+  }
+
+  public getAllParticipants(): void{
+    this.participantService.getAllParticipant().subscribe(
+  (response: Participant[]) => {
+    this.participants = response;
+    console.log(this.participants);
+  },
+  (error: HttpErrorResponse) =>{
+    alert(error.message);
+  }
+  );
   }
 
   public getAllPresence(): void {
@@ -37,7 +56,7 @@ export class AddingPresenceComponent implements OnInit {
 
   public onAddPresence(addForm: NgForm): void {
     this.presenceService.addPresence(addForm.value).subscribe(
-      (response: Presence) => {
+      (response: PresenceDto) => {
         console.log(response);
         this.getAllPresence();
       },
@@ -94,6 +113,23 @@ export class AddingPresenceComponent implements OnInit {
     button.setAttribute('data-toggle', 'modal');
     if(mode == 'add'){
     button.setAttribute('data-target', '#addPresenceModal');
+
+// update list of participants
+this.participantService.getAllParticipant().subscribe(
+  (response: Participant[]) => {
+    this.participants = response;
+    const list = document.getElementById('participants');
+    for (let index = 0; index < this.participants.length; index++) {
+      let option = document.createElement('option');
+      option.value = this.participants[index].name;
+      list?.appendChild(option);
+    }
+  },
+  (error: HttpErrorResponse) => {
+    alert(error.message);
+  }
+);
+
     }
     if(mode == 'edit'){
       this.editPresence=presence;

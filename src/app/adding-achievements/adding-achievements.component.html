@@ -31,8 +31,8 @@
                   </ul>
                   <div class="card-body">
                       <div class="float-right btn-group btn-group-sm">
-                          <a (click)="onOpenModal(achievement, 'edit')" href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
-                          <a (click)="onOpenModal(achievement, 'delete')" href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                          <a (click)="onOpenModal(achievement, 'edit')"  class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                          <a (click)="onOpenModal(achievement, 'delete')"  class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
                       </div>
                       <ul class="social-links list-inline mb-0">
                           <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Facebook"><i class="fa fa-facebook-f"></i></a></li>
@@ -66,6 +66,16 @@
                  <label for="type">Type</label>
                  <input type="text" ngModel name="type" class="form-control" id="type" placeholder="Type" required>
               </div>
+
+
+              <div class="form-participant">
+               <label for="participant">Uczestnik</label>
+               <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Participant"
+                  required>
+               <datalist id="participants"></datalist>
+            </div>
+              
+              
               <div class="modal-footer">
                  <button type="button" id="add-achievement-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
                  <button (click)="onAddAchievement(addForm)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>

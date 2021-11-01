@@ -27,12 +27,15 @@
                       </div> 
                   </div>
                   <ul class="list-group list-group-flush">
-                      <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Date : {{presence?.date}}</li>
+                     <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Obecność : {{presence?.isPresent}}</li>
+                 </ul>
+                  <ul class="list-group list-group-flush">
+                      <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Data : {{presence?.date}}</li>
                   </ul>
                   <div class="card-body">
                       <div class="float-right btn-group btn-group-sm">
-                          <a (click)="onOpenModal(presence, 'edit')" href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
-                          <a (click)="onOpenModal(presence, 'delete')" href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                          <a (click)="onOpenModal(presence, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                          <a (click)="onOpenModal(presence, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
                       </div>
                       <ul class="social-links list-inline mb-0">
                           <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Facebook"><i class="fa fa-facebook-f"></i></a></li>
@@ -58,13 +61,23 @@
            </div>
            <div class="modal-body">
               <form #addForm="ngForm" (ngSubmit)="onAddPresence(addForm)">
+               <div class="form-participant">
+                  <label for="participant">Uczestnik</label>
+                  <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Participant"
+                     required>
+                  <datalist id="participants"></datalist>
+               </div>
               <div class="form-group">
-                 <label for="isPresent">is Present</label>
-                 <input type="checkbox" ngModel name="isPresent" class="form-control" id="isPresent" placeholder="IsPresent" required>
+                 <label for="isPresent">Obecność</label>
+                 <input type="presences" list="presences" ngModel name="isPresent" class="form-control" id="isPresent" placeholder="Obecność" required>
+                 <datalist id="presences">
+                    <option value="obecny">
+                    <option value="nieobecny">
+                 </datalist>
               </div>
               <div class="form-group">
-                 <label for="date">Date</label>
-                 <input type="datetime-local" ngModel name="date" class="form-control" id="date" placeholder="Date" required>
+                 <label for="date">Data</label>
+                 <input type="date" ngModel name="date" class="form-control" id="date" placeholder="Date" required>
               </div>
               <div class="modal-footer">
                  <button type="button" id="add-presence-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -90,16 +103,31 @@
             </div>
             <div class="modal-body">
                <form #editForm="ngForm">
+
+                
+                             
+
                   <div class="form-group">
-                     <label for="isPresent">Is Present</label>
-                     <input type="checkbox" ngModel="{{editPresence?.isPresent}}" name="isPresent" class="form-control" id="name" aria-describedby="emailHelp" placeholder="IsPresent">
+                     <label for="isPresent">Obecność</label>
+                     <input type="presences" list="presences" ngModel="{{editPresence?.isPresent}}" name="isPresent" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Obecność">
+                     <datalist id="presences">
+                        <option value="obecny">
+                        <option value="nieobecny">
+                     </datalist>
                   </div>
                   <input type="hidden" ngModel="{{editPresence?.id}}" name="id" class="form-control" id="id" placeholder="Email">
                   <input type="hidden" ngModel="{{editPresence?.presenceCode}}" name="presenceCode" class="form-control" id="presenceCode" placeholder="Email">
                   <div class="form-group">
-                     <label for="date">Date</label>
-                     <input type="datetime-local" ngModel="{{editPresence?.date}}" name="date" class="form-control" id="date" placeholder="Date">
+                     <label for="date">Data</label>
+                     <input type="date" ngModel="{{editPresence?.date}}" name="date" class="form-control" id="date" placeholder="Data">
                   </div>
+                  <!-- <div class="form-group">
+                     <label for="participant">Uczestnik</label>
+                     <input type="text" list="participants" ngModel="{{editPresence?.participant}}" name="participant" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Uczestnik">
+                     <datalist id="participants">
+                     </datalist>
+                  </div> -->
+                  
                   <div class="modal-footer">
                      <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
                      <button (click)="onUpdatePresence(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>

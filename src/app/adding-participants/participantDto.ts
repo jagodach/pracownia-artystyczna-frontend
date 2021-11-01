@@ -1,7 +1,8 @@
 export interface ParticipantDto{
+    id: number;
     name: string;
     email: string;
-    phone: number;
+    phone: string;
     group: string;
     url: string;
 }

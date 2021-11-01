@@ -5,5 +5,5 @@ export interface Participant{
     phone: string;
     url: string;
     group: string;
-    participantCode: string;
+    participantCode?: string;
 }

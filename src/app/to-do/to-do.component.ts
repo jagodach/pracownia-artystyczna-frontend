@@ -1,8 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Participant } from '../adding-participants/participant';
+import { ParticipantService } from '../adding-participants/participant.service';
 import { ToDo } from './to-do';
 import { ToDoService } from './to-do.service';
+import { ToDoDto } from './todoDto';
 
 @Component({
   selector: 'app-to-do',
@@ -13,14 +16,31 @@ export class ToDoComponent implements OnInit {
   public todos: ToDo[];
   public editToDo: ToDo;
   public deleteToDo: ToDo;
+  public participants: Participant[];
 
-  constructor(private todoService: ToDoService) { 
+  constructor(private todoService: ToDoService,
+    private participantService: ParticipantService) { 
     this.todos = [];
     this.editToDo = {} as ToDo;
     this.deleteToDo = {} as ToDo;
+    this.participants = [];
   }
 
   ngOnInit(): void {
+    this.getAllToDo();
+    
+  }
+
+  public getAllParticipants(): void{
+    this.participantService.getAllParticipant().subscribe(
+  (response: Participant[]) => {
+    this.participants = response;
+    console.log(this.participants);
+  },
+  (error: HttpErrorResponse) =>{
+    alert(error.message);
+  }
+  );
   }
 
   public getAllToDo(): void {
@@ -35,6 +55,8 @@ export class ToDoComponent implements OnInit {
     );
   }
 
+
+  //czy tutaj ma byc ToDoDto?
   public onAddToDo(addForm: NgForm): void {
     this.todoService.addToDo(addForm.value).subscribe(
       (response: ToDo) => {
@@ -93,6 +115,23 @@ export class ToDoComponent implements OnInit {
     button.setAttribute('data-toggle', 'modal');
     if(mode == 'add'){
     button.setAttribute('data-target', '#addToDoModal');
+
+ // update list of groups
+ this.participantService.getAllParticipant().subscribe(
+  (response: Participant[]) => {
+    this.participants = response;
+    const list = document.getElementById('participants');
+    for (let index = 0; index < this.participants.length; index++) {
+      let option = document.createElement('option');
+      option.value = this.participants[index].name;
+      list?.appendChild(option);
+    }
+  },
+  (error: HttpErrorResponse) => {
+    alert(error.message);
+  }
+);
+
     }
     if(mode == 'edit'){
       this.editToDo=todo;
