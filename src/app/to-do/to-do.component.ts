@@ -56,10 +56,9 @@ export class ToDoComponent implements OnInit {
   }
 
 
-  //czy tutaj ma byc ToDoDto?
   public onAddToDo(addForm: NgForm): void {
     this.todoService.addToDo(addForm.value).subscribe(
-      (response: ToDo) => {
+      (response: ToDoDto) => {
         console.log(response);
         this.getAllToDo();
       },
@@ -70,8 +69,11 @@ export class ToDoComponent implements OnInit {
   }
 
   public onUpdateToDo(todo: ToDo): void {
+    delete todo.toDoCode;
+    let todoDto: ToDoDto = todo;
+    console.log(todo);
     this.todoService.updateToDo(todo).subscribe(
-      (response: ToDo) => {
+      (response: ToDoDto) => {
         console.log(response);
         this.getAllToDo();
       },
@@ -97,7 +99,8 @@ export class ToDoComponent implements OnInit {
     console.log(key);
     const results: ToDo[] = [];
     for (const todo of this.todos) {
-      if (todo.message.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+      if (todo.message.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      || todo.participant.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(todo);
       }
     }
@@ -116,7 +119,7 @@ export class ToDoComponent implements OnInit {
     if(mode == 'add'){
     button.setAttribute('data-target', '#addToDoModal');
 
- // update list of groups
+ // update list of participants
  this.participantService.getAllParticipant().subscribe(
   (response: Participant[]) => {
     this.participants = response;
@@ -136,6 +139,21 @@ export class ToDoComponent implements OnInit {
     if(mode == 'edit'){
       this.editToDo=todo;
       button.setAttribute('data-target', '#updateToDoModal');
+      // update list of participants
+    this.participantService.getAllParticipant().subscribe(
+      (response: Participant[]) => {
+        this.participants = response;
+        const list = document.getElementById('participants');
+        for (let index = 0; index < this.participants.length; index++) {
+          let option = document.createElement('option');
+          option.value = this.participants[index].name;
+          list?.appendChild(option);
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
       }
   
     if(mode == 'delete'){

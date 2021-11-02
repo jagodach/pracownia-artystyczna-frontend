@@ -5,6 +5,7 @@ import { Participant } from '../adding-participants/participant';
 import { ParticipantService } from '../adding-participants/participant.service';
 import { Work } from './work';
 import { WorkService } from './work.service';
+import { WorkDto } from './workDto';
 
 @Component({
   selector: 'app-adding-works',
@@ -26,7 +27,7 @@ export class AddingWorksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllWork;
+    this.getAllWork();
   }
 
   public getAllParticipants(): void{
@@ -55,7 +56,7 @@ export class AddingWorksComponent implements OnInit {
 
   public onAddWork(addForm: NgForm): void {
     this.workService.addWork(addForm.value).subscribe(
-      (response: Work) => {
+      (response: WorkDto) => {
         console.log(response);
         this.getAllWork();
       },
@@ -66,8 +67,11 @@ export class AddingWorksComponent implements OnInit {
   }
 
   public onUpdateWork(work: Work): void {
+    delete work.workCode;
+    let workDto: WorkDto = work;
+    console.log(work);
     this.workService.updateWork(work).subscribe(
-      (response: Work) => {
+      (response: WorkDto) => {
         console.log(response);
         this.getAllWork();
       },
@@ -95,7 +99,9 @@ export class AddingWorksComponent implements OnInit {
     for (const work of this.works) {
       if (work.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
       || work.type.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || work.photoUrl.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+      || work.photoUrl.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      || work.participant.toLowerCase().indexOf(key.toLowerCase()) !== -1)
+       {
         results.push(work);
       }
     }
@@ -114,6 +120,7 @@ export class AddingWorksComponent implements OnInit {
     if(mode == 'add'){
     button.setAttribute('data-target', '#addWorkModal');
 
+    // update list of participants
     this.participantService.getAllParticipant().subscribe(
       (response: Participant[]) => {
         this.participants = response;
@@ -133,6 +140,23 @@ export class AddingWorksComponent implements OnInit {
     if(mode == 'edit'){
       this.editWork=work;
       button.setAttribute('data-target', '#updateWorkModal');
+
+// update list of participants
+this.participantService.getAllParticipant().subscribe(
+  (response: Participant[]) => {
+    this.participants = response;
+    const list = document.getElementById('participants');
+    for (let index = 0; index < this.participants.length; index++) {
+      let option = document.createElement('option');
+      option.value = this.participants[index].name;
+      list?.appendChild(option);
+    }
+  },
+  (error: HttpErrorResponse) => {
+    alert(error.message);
+  }
+);
+
       }
   
     if(mode == 'delete'){

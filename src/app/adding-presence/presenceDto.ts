@@ -1,5 +1,6 @@
 export interface PresenceDto{
+    id: number;
     isPresent: string;
-    date: string;
+    date: Date;
     participant: string;
 }

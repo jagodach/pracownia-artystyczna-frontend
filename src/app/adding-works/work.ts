@@ -4,4 +4,5 @@ export interface Work{
     type: string;
     photoUrl: string;
     workCode: string;
+    participant: string;
 }

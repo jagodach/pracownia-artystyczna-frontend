@@ -24,6 +24,7 @@
                   <div class="card-body row">
                       <div class="col-6 card-title align-self-center mb-0">
                           <h5>{{presence?.isPresent}}</h5>
+                          <p class="m-0">Participant: {{presence?.participant}}</p>
                       </div> 
                   </div>
                   <ul class="list-group list-group-flush">
@@ -79,6 +80,7 @@
                  <label for="date">Data</label>
                  <input type="date" ngModel name="date" class="form-control" id="date" placeholder="Date" required>
               </div>
+
               <div class="modal-footer">
                  <button type="button" id="add-presence-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
                  <button (click)="onAddPresence(addForm)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
@@ -121,13 +123,13 @@
                      <label for="date">Data</label>
                      <input type="date" ngModel="{{editPresence?.date}}" name="date" class="form-control" id="date" placeholder="Data">
                   </div>
-                  <!-- <div class="form-group">
-                     <label for="participant">Uczestnik</label>
-                     <input type="text" list="participants" ngModel="{{editPresence?.participant}}" name="participant" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Uczestnik">
-                     <datalist id="participants">
-                     </datalist>
-                  </div> -->
                   
+                  <div class="form-participant">
+                     <label for="participant">Uczestnik</label>
+                     <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Participant"
+                        required>
+                     <datalist id="participants"></datalist>
+                  </div>
                   <div class="modal-footer">
                      <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
                      <button (click)="onUpdatePresence(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>

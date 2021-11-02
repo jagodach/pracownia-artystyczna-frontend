@@ -24,12 +24,10 @@
                   <div class="card-body row">
                       <div class="col-6 card-title align-self-center mb-0">
                           <h5>{{todo?.message}}</h5>
+                          <p class="m-0">Uczestnik: {{todo?.participant}}</p>
                       </div> 
                   </div>
-                  <!-- <ul class="list-group list-group-flush">
-                      <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Participant : {{participant?.email}}</li>
-                      
-                  </ul> -->
+
                   <div class="card-body">
                       <div class="float-right btn-group btn-group-sm">
                           <a (click)="onOpenModal(todo, 'edit')" href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
@@ -60,7 +58,7 @@
            <div class="modal-body">
               <form #addForm="ngForm" (ngSubmit)="onAddToDo(addForm)">
               <div class="form-group">
-                 <label for="message">message</label>
+                 <label for="message">wiadomość</label>
                  <input type="text" ngModel name="message" class="form-control" id="message" placeholder="message" required>
               </div>
 
@@ -96,8 +94,14 @@
             <div class="modal-body">
                <form #editForm="ngForm">
                   <div class="form-group">
-                     <label for="message">message</label>
+                     <label for="message">wiadomość</label>
                      <input type="text" ngModel="{{editToDo?.message}}" name="message" class="form-control" id="message" aria-describedby="emailHelp" placeholder="Message">
+                  </div>
+                  <div class="form-participant">
+                     <label for="participant">Uczestnik</label>
+                     <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Participant"
+                        required>
+                     <datalist id="participants"></datalist>
                   </div>
                   <div class="modal-footer">
                      <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>

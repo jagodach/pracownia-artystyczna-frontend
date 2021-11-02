@@ -67,8 +67,11 @@ export class AddingPresenceComponent implements OnInit {
   }
 
   public onUpdatePresence(presence: Presence): void {
+    delete presence.presenceCode;
+    let presenceDto: PresenceDto = presence;
+    console.log(presence);
     this.presenceService.updatePresence(presence).subscribe(
-      (response: Presence) => {
+      (response: PresenceDto) => {
         console.log(response);
         this.getAllPresence();
       },
@@ -94,7 +97,8 @@ export class AddingPresenceComponent implements OnInit {
     console.log(key);
     const results: Presence[] = [];
     for (const presence of this.presences) {
-      if (presence.isPresent.valueOf.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1
+      if (presence.isPresent.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      || presence.participant.toLowerCase().indexOf(key.toLowerCase()) !== -1
       || presence.date.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(presence);
       }
@@ -134,6 +138,20 @@ this.participantService.getAllParticipant().subscribe(
     if(mode == 'edit'){
       this.editPresence=presence;
       button.setAttribute('data-target', '#updatePresenceModal');
+      this.participantService.getAllParticipant().subscribe(
+        (response: Participant[]) => {
+          this.participants = response;
+          const list = document.getElementById('participants');
+          for (let index = 0; index < this.participants.length; index++) {
+            let option = document.createElement('option');
+            option.value = this.participants[index].name;
+            list?.appendChild(option);
+          }
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
       }
   
     if(mode == 'delete'){

@@ -22,8 +22,8 @@ export class PresenceService {
     return this.http.post<PresenceDto>(`${this.apiServerUrl}/presence/add`, presence);
   }
 
-  public updatePresence(presence: Presence): Observable<Presence> {
-    return this.http.put<Presence>(`${this.apiServerUrl}/presence/update`, presence);
+  public updatePresence(presence: PresenceDto): Observable<PresenceDto> {
+    return this.http.put<PresenceDto>(`${this.apiServerUrl}/presence/update`, presence);
   }
 
   public deletePresence(presenceId: number): Observable<void> {

@@ -24,31 +24,31 @@ export class AddingAchievementsComponent implements OnInit {
     this.editAchievement = {} as Achievement;
     this.deleteAchievement = {} as Achievement;
     this.participants = [];
-   }
+  }
 
   ngOnInit(): void {
     this.getAllAchievement();
   }
 
 
-  public getAllParticipants(): void{
+  public getAllParticipants(): void {
     this.participantService.getAllParticipant().subscribe(
-  (response: Participant[]) => {
-    this.participants = response;
-    console.log(this.participants);
-  },
-  (error: HttpErrorResponse) =>{
-    alert(error.message);
-  }
-  );
+      (response: Participant[]) => {
+        this.participants = response;
+        console.log(this.participants);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
 
   public getAllAchievement(): void {
     this.achievementService.getAllAchievement().subscribe(
       (response: Achievement[]) => {
-      this.achievements = response;
-      console.log(this.achievements);
+        this.achievements = response;
+        console.log(this.achievements);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -69,8 +69,11 @@ export class AddingAchievementsComponent implements OnInit {
   }
 
   public onUpdateAchievement(achievement: Achievement): void {
+    delete achievement.achievementCode;
+    let achievementDto: AchievementDto = achievement;
+    console.log(achievement);
     this.achievementService.updateAchievement(achievement).subscribe(
-      (response: Achievement) => {
+      (response: AchievementDto) => {
         console.log(response);
         this.getAllAchievement();
       },
@@ -97,7 +100,8 @@ export class AddingAchievementsComponent implements OnInit {
     const results: Achievement[] = [];
     for (const achievement of this.achievements) {
       if (achievement.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || achievement.type.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+        || achievement.participant.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        || achievement.type.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(achievement);
       }
     }
@@ -113,40 +117,56 @@ export class AddingAchievementsComponent implements OnInit {
     button.type = 'button';
     button.style.display = 'none';
     button.setAttribute('data-toggle', 'modal');
-    if(mode == 'add'){
-    button.setAttribute('data-target', '#addAchievementModal');
+    if (mode == 'add') {
+      button.setAttribute('data-target', '#addAchievementModal');
 
-  // update list of groups
-  this.participantService.getAllParticipant().subscribe(
-    (response: Participant[]) => {
-      this.participants = response;
-      const list = document.getElementById('participants');
-      for (let index = 0; index < this.participants.length; index++) {
-        let option = document.createElement('option');
-        option.value = this.participants[index].name;
-        list?.appendChild(option);
-      }
-    },
-    (error: HttpErrorResponse) => {
-      alert(error.message);
-    }
-  );
-
-
-    }
-    if(mode == 'edit'){
-      this.editAchievement=achievement;
-      button.setAttribute('data-target', '#updateAchievementModal');
-      }
-  
-    if(mode == 'delete'){
-        this.deleteAchievement = achievement;
-        button.setAttribute('data-target', '#deleteAchievementModal');
+      // update list of groups
+      this.participantService.getAllParticipant().subscribe(
+        (response: Participant[]) => {
+          this.participants = response;
+          const list = document.getElementById('participants');
+          for (let index = 0; index < this.participants.length; index++) {
+            let option = document.createElement('option');
+            option.value = this.participants[index].name;
+            list?.appendChild(option);
+          }
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
         }
-  
-        container?.appendChild(button);
-        button.click();
+      );
+
+
     }
+    if (mode == 'edit') {
+      this.editAchievement = achievement;
+      button.setAttribute('data-target', '#updateAchievementModal');
+      this.participantService.getAllParticipant().subscribe(
+        (response: Participant[]) => {
+          this.participants = response;
+          const list = document.getElementById('participants');
+          for (let index = 0; index < this.achievements.length; index++) {
+            let option = document.createElement('option');
+            option.value = this.participants[index].name;
+            list?.appendChild(option);
+          }
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+
+
+    }
+
+    if (mode == 'delete') {
+      this.deleteAchievement = achievement;
+      button.setAttribute('data-target', '#deleteAchievementModal');
+    }
+
+    container?.appendChild(button);
+    button.click();
+  }
 
 
 

@@ -5,7 +5,6 @@ import { ParticipantService } from './participant.service';
 import { Participant } from './participant';
 import { Group } from '../adding-groups/group';
 import { GroupService } from '../adding-groups/group.service';
-import { waitForAsync } from '@angular/core/testing';
 import { ParticipantDto } from './participantDto';
 
 @Component({
@@ -101,6 +100,7 @@ export class AddingParticipantsComponent implements OnInit {
     for (const participant of this.participants) {
       if (participant.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
         || participant.email.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        || participant.group.toLowerCase().indexOf(key.toLowerCase()) !== -1
         || participant.phone.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(participant);
       }

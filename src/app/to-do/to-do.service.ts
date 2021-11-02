@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ToDo } from './to-do';
 import { environment } from 'src/environments/environment';
+import { ToDoDto } from './todoDto';
 
 @Injectable({
     providedIn: 'root'
@@ -17,13 +18,13 @@ import { environment } from 'src/environments/environment';
       return this.http.get<ToDo[]>(`${this.apiServerUrl}/todo/all`);
     }
   
-    public addToDo(todo: ToDo): Observable<ToDo> {
+    public addToDo(todo: ToDoDto): Observable<ToDoDto> {
       console.log(todo);
-      return this.http.post<ToDo>(`${this.apiServerUrl}/todo/add`, todo);
+      return this.http.post<ToDoDto>(`${this.apiServerUrl}/todo/add`, todo);
     }
   
-    public updateToDo(todo: ToDo): Observable<ToDo> {
-      return this.http.put<ToDo>(`${this.apiServerUrl}/todo/update`, todo);
+    public updateToDo(todo: ToDoDto): Observable<ToDoDto> {
+      return this.http.put<ToDoDto>(`${this.apiServerUrl}/todo/update`, todo);
     }
   
     public deleteToDo(todoId: number): Observable<void> {

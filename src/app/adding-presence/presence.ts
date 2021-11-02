@@ -1,8 +1,8 @@
-import { Time } from "@angular/common";
 
 export interface Presence{
     id: number;
-    isPresent: String;
-    date: String;
+    isPresent: string;
+    date: Date;
+    participant: string;
     presenceCode: string;
 }

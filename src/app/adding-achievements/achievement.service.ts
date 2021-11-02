@@ -23,12 +23,12 @@ export class AchievementService {
   }
 
 
-  public updateAchievement(achievement: Achievement): Observable<Achievement> {
-    return this.http.put<Achievement>(`${this.apiServerUrl}/achievement/update`, achievement);
+  public updateAchievement(achievement: AchievementDto): Observable<AchievementDto> {
+    return this.http.put<AchievementDto>(`${this.apiServerUrl}/achievement/update`, achievement);
   }
 
   public deleteAchievement(achievementId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/work/achievement/${achievementId}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/achievement/delete/${achievementId}`);
   }
 
 }

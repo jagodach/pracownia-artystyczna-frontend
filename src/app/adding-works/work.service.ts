@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Work } from './work';
 import { environment } from 'src/environments/environment';
+import { WorkDto } from './workDto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,12 @@ export class WorkService {
     return this.http.get<Work[]>(`${this.apiServerUrl}/work/all`);
   }
 
-  public addWork(work: Work): Observable<Work> {
-    return this.http.post<Work>(`${this.apiServerUrl}/work/add`, work);
+  public addWork(work: WorkDto): Observable<WorkDto> {
+    return this.http.post<WorkDto>(`${this.apiServerUrl}/work/add`, work);
   }
 
-  public updateWork(work: Work): Observable<Work> {
-    return this.http.put<Work>(`${this.apiServerUrl}/work/update`, work);
+  public updateWork(work: WorkDto): Observable<WorkDto> {
+    return this.http.put<WorkDto>(`${this.apiServerUrl}/work/update`, work);
   }
 
   public deleteWork(workId: number): Observable<void> {

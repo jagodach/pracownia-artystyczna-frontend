@@ -16,6 +16,11 @@
   </nav>
   
   
+
+
+
+
+  
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
   <div class="container" id="main.container">
       <div class="row">
@@ -23,10 +28,14 @@
               <div class="card m-b-30">
                   <div class="card-body row">
                       <div class="col-6">
-                          <a href=""><img src="{{work?.photoUrl}}" alt="" class="img-fluid rounded-circle w-60"></a>
-                      </div>
+                           <input type="checkbox" id="zoomCheck">
+                           <label for="zoomCheck">
+                          <img src="{{work?.photoUrl}}" alt="" class="img-fluid rounded-circle w-60">
+                        </label>
+                        </div>
                       <div class="col-6 card-title align-self-center mb-0">
                           <h5>{{work?.name}}</h5>
+                          <p class="m-0">Participant: {{work?.participant}}</p>
                       </div> 
                   </div>
                   <ul class="list-group list-group-flush">
@@ -116,9 +125,15 @@
                      <label for="type">Type</label>
                      <input type="text" ngModel="{{editWork?.type}}" name="type" class="form-control" id="type" name="type" placeholder="Type">
                   </div>
-                  <div class="form-group">
+                  <div class="form-photo">
                      <label for="phone">Image URL</label>
                      <input type="text" ngModel="{{editWork?.photoUrl}}" name="photoUrl" class="form-control" id="photoUrl" placeholder="PhotoUrl">
+                  </div>
+                  <div class="form-participant">
+                     <label for="participant">Uczestnik</label>
+                     <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Participant"
+                        required>
+                     <datalist id="participants"></datalist>
                   </div>
                   <div class="modal-footer">
                      <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
