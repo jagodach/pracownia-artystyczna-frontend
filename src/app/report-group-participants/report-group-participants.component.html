@@ -1,0 +1,15 @@
+<form #groupForm="ngForm">
+    <div class="form-group">
+        <label for="group">Grupa</label>
+        <input type="text" list="groups" ngModel name="group" class="form-control" id="group" placeholder="Grupa"
+            required [(ngModel)] = 'selectedGroupName'>
+        <datalist id="groups"></datalist>
+    </div>
+    <button (click)="onGroupSelected(groupForm)" class="btn btn-primary">Generuj raport</button>
+</form>
+
+<ul>
+    <li *ngFor="let participant of participants;">
+        {{participant.name}}
+    </li>
+</ul>

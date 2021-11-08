@@ -6,11 +6,15 @@ import { AddingParticipantsComponent } from './adding-participants/adding-partic
 import { AddingPresenceComponent } from './adding-presence/adding-presence.component';
 import { AddingWorksComponent } from './adding-works/adding-works.component';
 import { AdminComponent } from './admin/admin.component';
+import { GenerateReportComponent } from './generate-report/generate-report.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { PolitykaComponent } from './polityka/polityka.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { RegulaminComponent } from './regulamin/regulamin.component';
+import { ReportGroupParticipantsComponent } from './report-group-participants/report-group-participants.component';
+import { ReportMostAchievmentsComponent } from './report-most-achievments/report-most-achievments.component';
+import { ReportParticipantDetailComponent } from './report-participant-detail/report-participant-detail.component';
 import { ToDoComponent } from './to-do/to-do.component';
 import { ToDoService } from './to-do/to-do.service';
 
@@ -25,10 +29,20 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'regulamin', component: RegulaminComponent },
   { path: 'adding-presence', component: AddingPresenceComponent },
-  { path: 'to-do', component: ToDoComponent},
-  {path: 'main', component: MainComponent},
-  { path: '', redirectTo: 'main', pathMatch: 'full'},
-  { path: 'participants', redirectTo: 'adding-participants', pathMatch: 'full'}
+  { path: 'to-do', component: ToDoComponent },
+  {
+    path: 'generate-report', component: GenerateReportComponent,
+    children:
+      [
+        { path: 'report-most-achievements', component: ReportMostAchievmentsComponent, outlet: "report"},
+        { path: 'reportsGroupParticipants', component: ReportGroupParticipantsComponent },
+        { path: 'reportsParticipantDetail', component: ReportParticipantDetailComponent }
+      ]
+  },
+  { path: 'main', component: MainComponent },
+  { path: 'participants', redirectTo: 'adding-participants', pathMatch: 'full' },
+  { path: 'mostachievements', redirectTo: 'report-most-achievements', pathMatch: 'full' },
+  { path: '', redirectTo: 'main', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -36,15 +50,15 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const routingComponents = [AddingParticipantsComponent, 
-    AddingGroupsComponent, 
-    AddingAchievementsComponent, 
-    AddingWorksComponent, 
-    AdminComponent, 
-    LoginComponent, 
-    PolitykaComponent, 
-    RegistrationComponent, 
-    RegulaminComponent, 
-    AddingPresenceComponent,
-    ToDoComponent,
-    MainComponent]
+export const routingComponents = [AddingParticipantsComponent,
+  AddingGroupsComponent,
+  AddingAchievementsComponent,
+  AddingWorksComponent,
+  AdminComponent,
+  LoginComponent,
+  PolitykaComponent,
+  RegistrationComponent,
+  RegulaminComponent,
+  AddingPresenceComponent,
+  ToDoComponent,
+  MainComponent]

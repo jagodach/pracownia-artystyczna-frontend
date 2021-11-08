@@ -16,6 +16,9 @@ import { RegistereduserComponent } from './registereduser/registereduser.compone
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BearerAuthInterceptor } from 'src/BearerAuthInterceptor';
+import { ReportMostAchievmentsComponent } from './report-most-achievments/report-most-achievments.component';
+import { ReportGroupParticipantsComponent } from './report-group-participants/report-group-participants.component';
+import { ReportParticipantDetailComponent } from './report-participant-detail/report-participant-detail.component';
 
 
 @NgModule({
@@ -28,6 +31,9 @@ import { BearerAuthInterceptor } from 'src/BearerAuthInterceptor';
     GenerateReportComponent,
     MainComponent,
     RegistereduserComponent,
+    ReportMostAchievmentsComponent,
+    ReportGroupParticipantsComponent,
+    ReportParticipantDetailComponent,
   ],
   imports: [
     BrowserModule,

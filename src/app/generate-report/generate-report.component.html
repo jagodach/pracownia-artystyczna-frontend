@@ -1,1 +1,24 @@
-<p>generate-report works!</p>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="col-6 card-title align-self-center mb-0">
+    <p>Wybierz raport:</p>
+    <div class="form-group">
+        <input type="text" list="reports" ngModel name="report" class="form-control" id="report" placeholder="Raport"
+        [(ngModel)]="reportType" (change)="optionSelected()" required>
+        <datalist id="reports">
+            <option>10 uczestników z największą liczą osiagnięć</option>
+            <option>Lista uczestników grupy</option>
+            <option>Raport dotyczący uczestnika (osiągnięcia i obecności)</option>
+        </datalist>
+    </div>
+</div>
+
+<div *ngIf="groupReport">
+    <app-report-group-participants></app-report-group-participants>
+</div>
+<div *ngIf="participantReport">
+    <app-report-most-achievments></app-report-most-achievments>
+</div>
+<div *ngIf="achievmentReport">
+    <app-report-participant-detail></app-report-participant-detail>
+</div>
