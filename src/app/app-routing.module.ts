@@ -9,6 +9,7 @@ import { AdminComponent } from './admin/admin.component';
 import { GenerateReportComponent } from './generate-report/generate-report.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { PolitykaComponent } from './polityka/polityka.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { RegulaminComponent } from './regulamin/regulamin.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'regulamin', component: RegulaminComponent },
   { path: 'adding-presence', component: AddingPresenceComponent },
+  {path: 'navbar', component: NavbarComponent},
   { path: 'to-do', component: ToDoComponent },
   {
     path: 'generate-report', component: GenerateReportComponent,
@@ -41,6 +43,7 @@ const routes: Routes = [
   },
   { path: 'main', component: MainComponent },
   { path: 'participants', redirectTo: 'adding-participants', pathMatch: 'full' },
+  { path: 'navbar', redirectTo: 'navbar', pathMatch: 'full' },
   { path: 'mostachievements', redirectTo: 'report-most-achievements', pathMatch: 'full' },
   { path: '', redirectTo: 'main', pathMatch: 'full' }
 ];
