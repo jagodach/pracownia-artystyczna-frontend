@@ -5,13 +5,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarColor02">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" routerLink="/adding-participants" routerLinkActive="active">Zarządzaj uczestnikami<span class="sr-only">(current)</span></a>
-          <a class="nav-item nav-link" routerLink="/adding-groups" routerLinkActive="active">Zarządzaj grupami</a>
-          <a class="nav-item nav-link" routerLink="/adding-achievements" routerLinkActive="active">Zarządzaj osiągnięciami</a>
-          <a class="nav-item nav-link" routerLink="/to-do" routerLinkActive="active">Zarządzaj zadaniami</a>
-          <a class="nav-item nav-link" routerLink="/adding-works" routerLinkActive="active">Zarządzaj pracami</a>
-          <a class="nav-item nav-link" routerLink="/adding-presence" routerLinkActive="active">Zarządzaj obecnościami</a>
-          <a class="nav-item nav-link" routerLink="/generate-report" routerLinkActive="active">Generuj raport</a>
+          <a class="nav-item nav-link hiddable" routerLink="/adding-participants" routerLinkActive="active">Zarządzaj uczestnikami<span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link hiddable" routerLink="/adding-groups" routerLinkActive="active">Zarządzaj grupami</a>
+          <a class="nav-item nav-link hiddable" routerLink="/adding-achievements" routerLinkActive="active">Zarządzaj osiągnięciami</a>
+          <a class="nav-item nav-link hiddable" routerLink="/to-do" routerLinkActive="active">Zarządzaj zadaniami</a>
+          <a class="nav-item nav-link hiddable" routerLink="/adding-works" routerLinkActive="active">Zarządzaj pracami</a>
+          <a class="nav-item nav-link hiddable" routerLink="/adding-presence" routerLinkActive="active">Zarządzaj obecnościami</a>
+          <a class="nav-item nav-link hiddable" routerLink="/generate-report" routerLinkActive="active">Generuj raport</a>
+          <span (click)="logout()" class="nav-item nav-link hiddable" >Wyloguj się</span>
         </div>
       </div>
     </nav>

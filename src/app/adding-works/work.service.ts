@@ -17,6 +17,10 @@ export class WorkService {
     return this.http.get<Work[]>(`${this.apiServerUrl}/work/all`);
   }
 
+  public getWorksByParticipantId(id: string): Observable<WorkDto[]> {
+    return this.http.get<WorkDto[]>(`${this.apiServerUrl}/work/participant/${id}`);
+  }
+
   public addWork(work: WorkDto): Observable<WorkDto> {
     return this.http.post<WorkDto>(`${this.apiServerUrl}/work/add`, work);
   }

@@ -1,17 +1,18 @@
-<form #groupForm="ngForm">
-    <div class="form-group">
-        <label for="group">Grupa</label>
-        <input type="text" list="groups" ngModel name="group" class="form-control" id="group" placeholder="Grupa"
-            required [(ngModel)] = 'selectedGroupName'>
-        <datalist id="groups"></datalist>
-    </div>
-    <button (click)="onGroupSelected(groupForm)" class="btn btn-primary">Generuj raport</button>
-</form>
+<div class="col-6 card-title align-self-center mb-0">
+    <form #groupForm="ngForm">
+        <div class="form-group">
+            <label>Raport uczestików grupy</label><br>
+            <input type="text" list="groups" ngModel name="group" class="form-control" id="group" placeholder="Grupa"
+                required [(ngModel)]='selectedGroupName'>
+            <datalist id="groups"></datalist>
+        </div>
+        <button (click)="onGroupSelected(groupForm)" class="btn btn-primary">Generuj raport</button>
+    </form>
+</div>
 
 
 <ul class="list-group">
     <li class="list-group-item" *ngFor="let participant of participants;">
-       Imię i nazwisko: {{participant.name}}, numer telefonu: {{participant.phone}}, email: {{participant.email}}
+        Imię i nazwisko: {{participant.name}}, numer telefonu: {{participant.phone}}, email: {{participant.email}}
     </li>
 </ul>
-

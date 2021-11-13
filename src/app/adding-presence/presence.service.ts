@@ -17,6 +17,10 @@ export class PresenceService {
     return this.http.get<Presence[]>(`${this.apiServerUrl}/presence/all`);
   }
 
+  public getPresencesByParticipantId(id: string): Observable<PresenceDto[]> {
+    return this.http.get<PresenceDto[]>(`${this.apiServerUrl}/presence/participant/${id}`);
+  }
+
   public addPresence(presence: PresenceDto): Observable<PresenceDto> {
     console.log(presence);
     return this.http.post<PresenceDto>(`${this.apiServerUrl}/presence/add`, presence);

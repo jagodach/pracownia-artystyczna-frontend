@@ -1,1 +1,7 @@
-<p>report-most-achievments works!</p>
+<button (click)="generateReport()" class="btn btn-primary">Generuj raport</button>
+
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let ach of mostAchievements; index as i;">
+        {{i+1}}. Imię i nazwisko: {{ach.name}}, liczba osiągnięć: {{ach.number}}
+    </li>
+</ul>

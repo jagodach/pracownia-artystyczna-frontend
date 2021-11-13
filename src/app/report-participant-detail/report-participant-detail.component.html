@@ -1,1 +1,33 @@
-<p>report-participant-detail works!</p>
+<div class="col-6 card-title align-self-center mb-0">
+    <form #groupForm="ngForm">
+        <div class="form-group">
+            <label>Raport uczestnika: obecności prace i osiągnięcia</label><br>
+            <input type="text" list="groups" ngModel name="group" class="form-control" id="group" placeholder="Grupa"
+                required [(ngModel)]='selectedGroupName' #groupName name="groupName" (focus)="groupName.value=''" (blur)="filterParticipants()">
+            <datalist id="groups"></datalist><br>
+            <input type="text" list="participants" ngModel name="participant" class="form-control"
+                    id="participant" placeholder="Imię i nazwisko uczestnika" required [(ngModel)]='selectedParticipant'>
+            <datalist id="participants"></datalist>
+        </div>
+        <button (click)="generateReport()" class="btn btn-primary">Generuj raport</button>
+    </form>
+</div>
+
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let work of participantWorks;">
+        Nazwa pracy: {{work.name}}, typ: {{work.type}}. Zdjęcie:
+        <img src="{{work.photoUrl}}">
+    </li>
+</ul>
+
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let achievement of participantAchievements;">
+        Nazwa osiągnięcia: {{achievement.name}}, typ: {{achievement.type}}, data: {{achievement.date}}
+    </li>
+</ul>
+
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let presence of participantPresences;">
+        Data: {{presence.date}}, obecny: {{presence.isPresent}}.
+    </li>
+</ul>

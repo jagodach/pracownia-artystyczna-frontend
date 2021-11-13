@@ -19,7 +19,7 @@ export class AddingWorksComponent implements OnInit {
   public participants: Participant[];
 
   constructor(private workService: WorkService,
-    private participantService: ParticipantService) { 
+    private participantService: ParticipantService) {
     this.works = [];
     this.editWork = {} as Work;
     this.deleteWork = {} as Work;
@@ -30,23 +30,23 @@ export class AddingWorksComponent implements OnInit {
     this.getAllWork();
   }
 
-  public getAllParticipants(): void{
+  public getAllParticipants(): void {
     this.participantService.getAllParticipant().subscribe(
-  (response: Participant[]) => {
-    this.participants = response;
-    console.log(this.participants);
-  },
-  (error: HttpErrorResponse) =>{
-    alert(error.message);
-  }
-  );
+      (response: Participant[]) => {
+        this.participants = response;
+        console.log(this.participants);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
   public getAllWork(): void {
     this.workService.getAllWork().subscribe(
       (response: Work[]) => {
-      this.works = response;
-      console.log(this.works);
+        this.works = response;
+        console.log(this.works);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -98,10 +98,9 @@ export class AddingWorksComponent implements OnInit {
     const results: Work[] = [];
     for (const work of this.works) {
       if (work.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || work.type.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || work.photoUrl.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || work.participant.toLowerCase().indexOf(key.toLowerCase()) !== -1)
-       {
+        || work.type.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        || work.photoUrl.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        || work.participant.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(work);
       }
     }
@@ -117,58 +116,59 @@ export class AddingWorksComponent implements OnInit {
     button.type = 'button';
     button.style.display = 'none';
     button.setAttribute('data-toggle', 'modal');
-    if(mode == 'add'){
-    button.setAttribute('data-target', '#addWorkModal');
+    if (mode == 'add') {
+      button.setAttribute('data-target', '#addWorkModal');
 
-    // update list of participants
-    this.participantService.getAllParticipant().subscribe(
-      (response: Participant[]) => {
-        this.participants = response;
-        const list = document.getElementById('participants');
-        for (let index = 0; index < this.participants.length; index++) {
-          let option = document.createElement('option');
-          option.value = this.participants[index].name;
-          list?.appendChild(option);
+      // update list of participants
+      this.participantService.getAllParticipant().subscribe(
+        (response: Participant[]) => {
+          this.participants = response;
+          const list = document.getElementById('participants');
+          for (let index = 0; index < this.participants.length; index++) {
+            let option = document.createElement('option');
+            option.value = this.participants[index].name;
+            list?.appendChild(option);
+          }
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
         }
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
+      );
 
     }
-    if(mode == 'edit'){
-      this.editWork=work;
+    if (mode == 'edit') {
+      this.editWork = work;
       button.setAttribute('data-target', '#updateWorkModal');
 
-// update list of participants
-this.participantService.getAllParticipant().subscribe(
-  (response: Participant[]) => {
-    this.participants = response;
-    const list = document.getElementById('participants');
-    for (let index = 0; index < this.participants.length; index++) {
-      let option = document.createElement('option');
-      option.value = this.participants[index].name;
-      list?.appendChild(option);
-    }
-  },
-  (error: HttpErrorResponse) => {
-    alert(error.message);
-  }
-);
-
-      }
-  
-    if(mode == 'delete'){
-        this.deleteWork = work;
-        button.setAttribute('data-target', '#deleteWorkModal');
+      // update list of participants
+      this.participantService.getAllParticipant().subscribe(
+        (response: Participant[]) => {
+          this.participants = response;
+          const list = document.getElementById('participants');
+          for (let index = 0; index < this.participants.length; index++) {
+            let option = document.createElement('option');
+            option.value = this.participants[index].name;
+            list?.appendChild(option);
+          }
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
         }
-  
-        container?.appendChild(button);
-        button.click();
+      );
+
     }
 
+    if (mode == 'delete') {
+      this.deleteWork = work;
+      button.setAttribute('data-target', '#deleteWorkModal');
+    }
 
+    container?.appendChild(button);
+    button.click();
+  }
 
+  public redirectToPhoto(url: string){
+    window.open(url, '_blank');
+  }
 
 }

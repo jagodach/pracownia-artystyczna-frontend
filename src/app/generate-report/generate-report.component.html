@@ -2,23 +2,24 @@
 
 <div class="col-6 card-title align-self-center mb-0">
     <p>Wybierz raport:</p>
-    <div class="form-group">
-        <input type="text" list="reports" ngModel name="report" class="form-control" id="report" placeholder="Raport"
-        [(ngModel)]="reportType" (change)="optionSelected()" required>
-        <datalist id="reports">
-            <option>10 uczestników z największą liczą osiagnięć</option>
-            <option>Lista uczestników grupy</option>
-            <option>Raport dotyczący uczestnika (osiągnięcia i obecności)</option>
-        </datalist>
-    </div>
+    <div class="dropdown form-group">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Wybierz raport
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" (click)="chooseReport('group')">Raport grupy</a>
+          <a class="dropdown-item" (click)="chooseReport('participant')">Raport uczestnika</a>
+          <a class="dropdown-item" (click)="chooseReport('achievment')">Raport osiągnięć</a>
+        </div>
+      </div>
 </div>
 
-<div *ngIf="groupReport">
+<div *ngIf="reportType == 'group'">
     <app-report-group-participants></app-report-group-participants>
 </div>
-<div *ngIf="participantReport">
+<div *ngIf="reportType == 'achievment'">
     <app-report-most-achievments></app-report-most-achievments>
 </div>
-<div *ngIf="achievmentReport">
+<div *ngIf="reportType == 'participant'">
     <app-report-participant-detail></app-report-participant-detail>
 </div>

@@ -2,18 +2,8 @@
     margin-top: -40px;
 
 }
-input[type=checkbox] {
-    display: none;
-  }
-  
-  .col-6 img {
-    transition: transform 0.25s ease;
-    cursor: zoom-in;
-  }
-  
-  input[type=checkbox]:checked ~ label > img {
-    transform: scale(3);
-    cursor: zoom-out;
-    margin: 50px;
-  }
+
+img:hover{
+  cursor: pointer;
+}
   

@@ -5,6 +5,7 @@ import { LoginService } from './login.service';
 import { LoginResponse } from './LoginResponse';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,6 @@ export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService,
     private jwtHelper :JwtHelperService,
-    private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -29,10 +29,8 @@ export class LoginComponent implements OnInit {
         console.log(JSON.stringify(this.jwtHelper.decodeToken(response.token.toString())));
         var tokenPayload = this.jwtHelper.decodeToken(response.token.toString());
         var roles = tokenPayload.role;
-        if (roles[0].authority == 'ADMIN'){
-          
-        }
-        else{
+        if (roles[0].authority == 'USER'){
+          NavbarComponent.changeVisiblity(true);
           this.router.navigate(['/participants']);
         }
       },

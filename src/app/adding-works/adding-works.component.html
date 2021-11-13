@@ -15,12 +15,6 @@
     </div>
   </nav>
   
-  
-
-
-
-
-  
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
   <div class="container" id="main.container">
       <div class="row">
@@ -28,10 +22,7 @@
               <div class="card m-b-30">
                   <div class="card-body row">
                       <div class="col-6">
-                           <input type="checkbox" id="zoomCheck">
-                           <label for="zoomCheck">
-                          <img src="{{work?.photoUrl}}" alt="" class="img-fluid rounded-circle w-60">
-                        </label>
+                          <img src="{{work?.photoUrl}}" alt="" class="img-fluid rounded-circle w-60" (click)="redirectToPhoto(work?.photoUrl)">
                         </div>
                       <div class="col-6 card-title align-self-center mb-0">
                           <h5>{{work?.name}}</h5>

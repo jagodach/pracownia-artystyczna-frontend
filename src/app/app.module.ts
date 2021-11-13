@@ -19,6 +19,10 @@ import { BearerAuthInterceptor } from 'src/BearerAuthInterceptor';
 import { ReportMostAchievmentsComponent } from './report-most-achievments/report-most-achievments.component';
 import { ReportGroupParticipantsComponent } from './report-group-participants/report-group-participants.component';
 import { ReportParticipantDetailComponent } from './report-participant-detail/report-participant-detail.component';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 
 
 @NgModule({
@@ -39,7 +43,10 @@ import { ReportParticipantDetailComponent } from './report-participant-detail/re
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CommonModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [
     ParticipantService, 

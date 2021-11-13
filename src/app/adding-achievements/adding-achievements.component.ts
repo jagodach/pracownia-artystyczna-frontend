@@ -35,6 +35,7 @@ export class AddingAchievementsComponent implements OnInit {
     this.participantService.getAllParticipant().subscribe(
       (response: Participant[]) => {
         this.participants = response;
+        this.participants.sort();
         console.log(this.participants);
       },
       (error: HttpErrorResponse) => {
@@ -48,6 +49,15 @@ export class AddingAchievementsComponent implements OnInit {
     this.achievementService.getAllAchievement().subscribe(
       (response: Achievement[]) => {
         this.achievements = response;
+        this.achievements = this.achievements.sort(function sort(a: Achievement, b: Achievement): number {
+          if (a.name < b.name){
+            return -1;
+          }
+          else if (a.name > b.name){
+            return 1;
+          }
+          return 0;
+        })
         console.log(this.achievements);
       },
       (error: HttpErrorResponse) => {

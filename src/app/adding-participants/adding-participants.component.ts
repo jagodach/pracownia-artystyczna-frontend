@@ -6,6 +6,9 @@ import { Participant } from './participant';
 import { Group } from '../adding-groups/group';
 import { GroupService } from '../adding-groups/group.service';
 import { ParticipantDto } from './participantDto';
+import { Router } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-adding-participants',
@@ -19,7 +22,9 @@ export class AddingParticipantsComponent implements OnInit {
   public groups: Group[];
 
   constructor(private particantService: ParticipantService,
-    private groupService: GroupService) {
+    private groupService: GroupService,
+    private router: Router,
+    private toastr: ToastrService) {
     this.participants = [];
     this.editParticipant = {} as Participant;
     this.deleteParticipant = {} as Participant;
@@ -27,7 +32,12 @@ export class AddingParticipantsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllParticipant();
+    if (localStorage.getItem('token') == null){
+      this.router.navigate(['/main']);
+    }
+    else {
+      this.getAllParticipant();
+    }
   }
 
   public getAllGroups(): void {
@@ -60,7 +70,9 @@ export class AddingParticipantsComponent implements OnInit {
         this.getAllParticipant();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.info('Dupsko pękło', 'Błąd połączenia', {
+          progressBar : true
+        });
       }
     );
   }
