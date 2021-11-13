@@ -83,10 +83,6 @@ export class ReportParticipantDetailComponent implements OnInit {
     }
   }
 
-  public clearInput(id: string){
-    const el = document.getElementById(id);
-  }
-
   public generateReport(){
     let participantId: string = '';
     for (let i = 0; i < this.participants.length; i++) {
