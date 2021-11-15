@@ -6,6 +6,9 @@ import { ParticipantService } from '../adding-participants/participant.service';
 import { Work } from './work';
 import { WorkService } from './work.service';
 import { WorkDto } from './workDto';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adding-works',
@@ -19,7 +22,9 @@ export class AddingWorksComponent implements OnInit {
   public participants: Participant[];
 
   constructor(private workService: WorkService,
-    private participantService: ParticipantService) {
+    private participantService: ParticipantService,
+    private router: Router,
+    private toastr: ToastrService) {
     this.works = [];
     this.editWork = {} as Work;
     this.deleteWork = {} as Work;
@@ -27,7 +32,12 @@ export class AddingWorksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllWork();
+    if (localStorage.getItem('token') == null){
+      this.router.navigate(['/main']);
+    }
+    else {
+      this.getAllWork();
+    }
   }
 
   public getAllParticipants(): void {
@@ -37,7 +47,9 @@ export class AddingWorksComponent implements OnInit {
         console.log(this.participants);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Nie udało się pobrać uczestników', {
+          progressBar : true
+        });
       }
     );
   }
@@ -46,10 +58,21 @@ export class AddingWorksComponent implements OnInit {
     this.workService.getAllWork().subscribe(
       (response: Work[]) => {
         this.works = response;
+        this.works = this.works.sort(function sort(a: Work, b: Work): number {
+          if (a.name < b.name){
+            return -1;
+          }
+          else if (a.name > b.name){
+            return 1;
+          }
+          return 0;
+        })
         console.log(this.works);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Nie udało się pobrać prac', {
+          progressBar : true
+        });
       }
     );
   }
@@ -61,7 +84,9 @@ export class AddingWorksComponent implements OnInit {
         this.getAllWork();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Wypełnij poprawnie formularz dodawania pracy', {
+          progressBar : true
+        });
       }
     );
   }
@@ -76,7 +101,9 @@ export class AddingWorksComponent implements OnInit {
         this.getAllWork();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Wypełnij poprawnie formularz edytowania pracy', {
+          progressBar : true
+        });
       }
     );
   }
@@ -88,7 +115,9 @@ export class AddingWorksComponent implements OnInit {
         this.getAllWork();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Usunięcie osiągnięcia nie powiodło się', {
+          progressBar : true
+        });
       }
     );
   }
@@ -131,7 +160,9 @@ export class AddingWorksComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          this.toastr.error('', 'Błąd', {
+            progressBar : true
+          });
         }
       );
 
@@ -152,7 +183,9 @@ export class AddingWorksComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          this.toastr.error('', 'Błąd', {
+            progressBar : true
+          });
         }
       );
 

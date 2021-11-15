@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Group } from './group';
 import { GroupService } from './group.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adding-groups',
@@ -14,14 +17,21 @@ public groups: Group[];
 public editGroup: Group;
 public deleteGroup: Group;
 
-  constructor(private groupService: GroupService) {
+  constructor(private groupService: GroupService,
+    private router: Router,
+    private toastr: ToastrService) {
     this.groups = [];
     this.editGroup = {} as Group;
     this.deleteGroup = {} as Group;
       }
 
   ngOnInit(): void {
-    this.getAllGroup();
+    if (localStorage.getItem('token') == null){
+      this.router.navigate(['/main']);
+    }
+    else {
+      this.getAllGroup();
+    }
   }
 
 
@@ -29,10 +39,21 @@ public getAllGroup(): void {
   this.groupService.getAllGroup().subscribe(
     (response: Group[]) => {
     this.groups = response;
+    this.groups = this.groups.sort(function sort(a: Group, b: Group): number {
+      if (a.name < b.name){
+        return -1;
+      }
+      else if (a.name > b.name){
+        return 1;
+      }
+      return 0;
+    })
     console.log(this.groups);
     },
     (error: HttpErrorResponse) => {
-      alert(error.message);
+      this.toastr.error('', 'Nie udało się pobrać grup', {
+        progressBar : true
+      });
     }
   );
 }
@@ -44,7 +65,9 @@ public onAddGroup(addForm: NgForm): void {
       this.getAllGroup();
     },
     (error: HttpErrorResponse) => {
-      alert(error.message);
+      this.toastr.error('', 'Wypełnij poprawnie formularz dodawania grupy', {
+        progressBar : true
+      });
     }
   );
 }
@@ -56,7 +79,9 @@ public onUpdateGroup(group: Group): void {
       this.getAllGroup();
     },
     (error: HttpErrorResponse) => {
-      alert(error.message);
+      this.toastr.error('', 'Wypełnij poprawnie formularz edytowania grupy', {
+        progressBar : true
+      });
     }
   );
 }
@@ -68,7 +93,9 @@ public onDeleteGroup(groupId: number): void {
       this.getAllGroup();
     },
     (error: HttpErrorResponse) => {
-      alert(error.message);
+      this.toastr.error('', 'Usuwanie grupy nie powiodło się', {
+        progressBar : true
+      });
     }
   );
 }

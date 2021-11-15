@@ -6,6 +6,9 @@ import { ParticipantService } from '../adding-participants/participant.service';
 import { Achievement } from './achievement';
 import { AchievementService } from './achievement.service';
 import { AchievementDto } from './achievementDto';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adding-achievements',
@@ -19,15 +22,23 @@ export class AddingAchievementsComponent implements OnInit {
   public participants: Participant[];
 
   constructor(private achievementService: AchievementService,
-    private participantService: ParticipantService) {
+    private participantService: ParticipantService,
+    private router: Router,
+    private toastr: ToastrService) {
     this.achievements = [];
     this.editAchievement = {} as Achievement;
     this.deleteAchievement = {} as Achievement;
     this.participants = [];
   }
 
+
   ngOnInit(): void {
-    this.getAllAchievement();
+    if (localStorage.getItem('token') == null){
+      this.router.navigate(['/main']);
+    }
+    else {
+      this.getAllAchievement();
+    }
   }
 
 
@@ -39,7 +50,9 @@ export class AddingAchievementsComponent implements OnInit {
         console.log(this.participants);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Nie udało się pobrać uczestników', {
+          progressBar : true
+        });
       }
     );
   }
@@ -61,7 +74,9 @@ export class AddingAchievementsComponent implements OnInit {
         console.log(this.achievements);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Nie udało się pobrać osiągnięć', {
+          progressBar : true
+        });
       }
     );
   }
@@ -73,7 +88,9 @@ export class AddingAchievementsComponent implements OnInit {
         this.getAllAchievement();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Wypełnij poprawnie formularz dodawania osiągnięcia', {
+          progressBar : true
+        });
       }
     );
   }
@@ -88,7 +105,9 @@ export class AddingAchievementsComponent implements OnInit {
         this.getAllAchievement();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Wypełnij poprawnie formularz edytowania osiągnięcia', {
+          progressBar : true
+        });
       }
     );
   }
@@ -100,7 +119,9 @@ export class AddingAchievementsComponent implements OnInit {
         this.getAllAchievement();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Usuwanie osiągnięcia nie powiodło się', {
+          progressBar : true
+        });
       }
     );
   }
@@ -142,7 +163,9 @@ export class AddingAchievementsComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          this.toastr.error('', 'Błąd', {
+            progressBar : true
+          });
         }
       );
 
@@ -162,7 +185,9 @@ export class AddingAchievementsComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          this.toastr.error('', 'Błąd', {
+            progressBar : true
+          });
         }
       );
 

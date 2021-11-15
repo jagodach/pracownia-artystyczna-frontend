@@ -14,7 +14,14 @@ export class GenerateReportComponent implements OnInit {
     this.reportType = '';
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (localStorage.getItem('token') == null){
+      this.router.navigate(['/main']);
+    }
+    else {
+      
+    }
+  }
 
   public chooseReport(type: string){
     this.reportType = type;

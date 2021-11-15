@@ -47,7 +47,9 @@ export class AddingParticipantsComponent implements OnInit {
         console.log(this.groups);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Nie udało się pobrać grup', {
+          progressBar : true
+        });
       }
     );
   }
@@ -56,13 +58,26 @@ export class AddingParticipantsComponent implements OnInit {
     this.particantService.getAllParticipant().subscribe(
       (response: Participant[]) => {
         this.participants = response;
+        this.participants = this.participants.sort(function sort(a: Participant, b: Participant): number {
+          if (a.name < b.name){
+            return -1;
+          }
+          else if (a.name > b.name){
+            return 1;
+          }
+          return 0;
+        })
         console.log(this.participants);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Nie udało się wyświetlić uczestników', {
+          progressBar : true
+        });
       }
     );
   }
+
+  
 
   public onAddParticipant(addForm: NgForm): void {
     this.particantService.addParticipant(addForm.value).subscribe(
@@ -70,7 +85,7 @@ export class AddingParticipantsComponent implements OnInit {
         this.getAllParticipant();
       },
       (error: HttpErrorResponse) => {
-        this.toastr.info('Dupsko pękło', 'Błąd połączenia', {
+        this.toastr.error('', 'Wypełnij poprawnie formularz dodawania uczestnika', {
           progressBar : true
         });
       }
@@ -88,7 +103,9 @@ export class AddingParticipantsComponent implements OnInit {
         this.getAllParticipant();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Wypełnij poprawnie formularz edytowania uczestnika', {
+          progressBar : true
+        });
       }
     );
   }
@@ -101,7 +118,9 @@ export class AddingParticipantsComponent implements OnInit {
         this.getAllParticipant();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Usuwanie uczestnika nie powiodło się', {
+          progressBar : true
+        });
       }
     );
   }
@@ -144,7 +163,9 @@ export class AddingParticipantsComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          this.toastr.error('', 'Błąd', {
+            progressBar : true
+          });
         }
       );
     }
@@ -162,7 +183,9 @@ export class AddingParticipantsComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          this.toastr.error('', 'Błąd', {
+            progressBar : true
+          });
         }
       );
     }

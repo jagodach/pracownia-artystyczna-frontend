@@ -2,6 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AchievementService } from '../adding-achievements/achievement.service';
 import { MostAchievements } from '../adding-achievements/MostAchievements';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-report-most-achievments',
@@ -11,7 +14,9 @@ import { MostAchievements } from '../adding-achievements/MostAchievements';
 export class ReportMostAchievmentsComponent implements OnInit {
   mostAchievements: MostAchievements[] = [];
 
-  constructor(private achievementService: AchievementService) { }
+  constructor(private achievementService: AchievementService,
+    private router: Router,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -22,7 +27,9 @@ export class ReportMostAchievmentsComponent implements OnInit {
         this.mostAchievements = response;
       },
       (error: HttpErrorResponse) => {
-        alert(error);
+        this.toastr.error('', 'Nie udało się wygenerować raportu', {
+          progressBar : true
+        });
       }
     )
   }

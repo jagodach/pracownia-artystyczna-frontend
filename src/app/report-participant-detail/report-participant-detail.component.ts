@@ -11,6 +11,9 @@ import { PresenceDto } from '../adding-presence/presenceDto';
 import { WorkService } from '../adding-works/work.service';
 import { WorkDto } from '../adding-works/workDto';
 import { ReportGroupService } from '../report-group-participants/report-group.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-report-participant-detail',
@@ -33,7 +36,9 @@ export class ReportParticipantDetailComponent implements OnInit {
     private participantService: ParticipantService,
     private workService: WorkService,
     private presenceService: PresenceService,
-    private achievemntService: AchievementService) { }
+    private achievemntService: AchievementService,
+    private router: Router,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.groupService.getAllGroup().subscribe(
@@ -47,7 +52,9 @@ export class ReportParticipantDetailComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Błąd', {
+          progressBar : true
+        });
       }
     );
 
@@ -56,7 +63,9 @@ export class ReportParticipantDetailComponent implements OnInit {
         this.participants = response;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Błąd', {
+          progressBar : true
+        });
       }
     );
   }
@@ -97,7 +106,9 @@ export class ReportParticipantDetailComponent implements OnInit {
         this.participantAchievements = response;
       },
       (error: HttpErrorResponse) => {
-        alert(error);
+        this.toastr.error('', 'Nie udało się wygenerować raportu', {
+          progressBar : true
+        });
       }
     )
 
@@ -106,7 +117,9 @@ export class ReportParticipantDetailComponent implements OnInit {
         this.participantPresences = response;
       },
       (error: HttpErrorResponse) => {
-        alert(error);
+        this.toastr.error('', 'Błąd', {
+          progressBar : true
+        });
       }
     )
 
@@ -115,7 +128,9 @@ export class ReportParticipantDetailComponent implements OnInit {
         this.participantWorks = response;
       },
       (error: HttpErrorResponse) => {
-        alert(error);
+        this.toastr.error('', 'Błąd', {
+          progressBar : true
+        });
       }
     )
   }

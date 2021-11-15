@@ -6,6 +6,9 @@ import { GroupService } from '../adding-groups/group.service';
 import { ParticipantService } from '../adding-participants/participant.service';
 import { ParticipantDto } from '../adding-participants/participantDto';
 import { ReportGroupService } from './report-group.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-report-group-participants',
@@ -18,7 +21,9 @@ export class ReportGroupParticipantsComponent implements OnInit {
   selectedGroupName: string = '';
 
   constructor(private groupReportService: ReportGroupService,
-      private groupService: GroupService) { 
+      private groupService: GroupService,
+      private router: Router,
+      private toastr: ToastrService) { 
     this.participants = [];
     this.groups = [];
   }
@@ -35,7 +40,9 @@ export class ReportGroupParticipantsComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Nie udało się pobrać grup', {
+          progressBar : true
+        });
       }
     );
   }
@@ -48,7 +55,9 @@ export class ReportGroupParticipantsComponent implements OnInit {
             this.participants = response;
           },
           (error: HttpErrorResponse) => {
-            alert(error.message);
+            this.toastr.error('', 'Wybierz grupę', {
+              progressBar : true
+            });
           }
         );
       }

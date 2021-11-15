@@ -6,6 +6,9 @@ import { Presence } from './presence';
 import { PresenceService } from './presence.service';
 import { PresenceDto } from './presenceDto';
 import { ParticipantService } from '../adding-participants/participant.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adding-presence',
@@ -19,7 +22,9 @@ export class AddingPresenceComponent implements OnInit {
   public participants: Participant[];
 
   constructor(private presenceService: PresenceService,
-    private participantService: ParticipantService) {
+    private participantService: ParticipantService,
+    private router: Router,
+    private toastr: ToastrService) {
     this.presences = [];
     this.editPresence = {} as Presence;
     this.deletePresence = {} as Presence; 
@@ -27,7 +32,12 @@ export class AddingPresenceComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.getAllPresence();
+    if (localStorage.getItem('token') == null){
+      this.router.navigate(['/main']);
+    }
+    else {
+      this.getAllPresence();
+    }
   }
 
   public getAllParticipants(): void{
@@ -37,7 +47,9 @@ export class AddingPresenceComponent implements OnInit {
     console.log(this.participants);
   },
   (error: HttpErrorResponse) =>{
-    alert(error.message);
+    this.toastr.error('', 'Nie udało się pobrać uczestników', {
+      progressBar : true
+    });
   }
   );
   }
@@ -46,10 +58,21 @@ export class AddingPresenceComponent implements OnInit {
     this.presenceService.getAllPresence().subscribe(
       (response: Presence[]) => {
       this.presences = response;
+      this.presences = this.presences.sort(function sort(a: Presence, b: Presence): number {
+        if (a.isPresent < b.isPresent){
+          return -1;
+        }
+        else if (a.isPresent > b.isPresent){
+          return 1;
+        }
+        return 0; 
+      })
       console.log(this.presences);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Nie udało się pobrać obecności', {
+          progressBar : true
+        });
       }
     );
   }
@@ -61,7 +84,9 @@ export class AddingPresenceComponent implements OnInit {
         this.getAllPresence();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Wypełnij poprawnie formularz dodawania obecności', {
+          progressBar : true
+        });
       }
     );
   }
@@ -76,7 +101,9 @@ export class AddingPresenceComponent implements OnInit {
         this.getAllPresence();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Wypełnij poprawnie formularz edytowania obecności', {
+          progressBar : true
+        });
       }
     );
   }
@@ -88,7 +115,9 @@ export class AddingPresenceComponent implements OnInit {
         this.getAllPresence();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Usuwanie obecności nie powiodło się', {
+          progressBar : true
+        });
       }
     );
   }
@@ -130,7 +159,9 @@ this.participantService.getAllParticipant().subscribe(
     }
   },
   (error: HttpErrorResponse) => {
-    alert(error.message);
+    this.toastr.error('', 'Błąd', {
+      progressBar : true
+    });
   }
 );
 
@@ -149,7 +180,9 @@ this.participantService.getAllParticipant().subscribe(
           }
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          this.toastr.error('', 'Błąd', {
+            progressBar : true
+          });
         }
       );
       }
