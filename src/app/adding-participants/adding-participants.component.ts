@@ -156,6 +156,9 @@ export class AddingParticipantsComponent implements OnInit {
         (response: Group[]) => {
           this.groups = response;
           const list = document.getElementById('groups');
+          while (list?.firstChild) {
+            list?.removeChild(list?.firstChild);
+          }
           for (let index = 0; index < this.groups.length; index++) {
             let option = document.createElement('option');
             option.value = this.groups[index].name;
@@ -176,6 +179,9 @@ export class AddingParticipantsComponent implements OnInit {
         (response: Group[]) => {
           this.groups = response;
           const list = document.getElementById('groups');
+          while (list?.firstChild) {
+            list?.removeChild(list?.firstChild);
+          }
           for (let index = 0; index < this.groups.length; index++) {
             let option = document.createElement('option');
             option.value = this.groups[index].name;

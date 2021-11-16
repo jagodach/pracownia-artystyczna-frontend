@@ -6,28 +6,89 @@
                 required [(ngModel)]='selectedGroupName' #groupName name="groupName" (focus)="groupName.value=''" (blur)="filterParticipants()">
             <datalist id="groups"></datalist><br>
             <input type="text" list="participants" ngModel name="participant" class="form-control"
-                    id="participant" placeholder="Imię i nazwisko uczestnika" required [(ngModel)]='selectedParticipant'>
+                    id="participant" placeholder="Imię i nazwisko uczestnika" required [(ngModel)]='selectedParticipant' #participantName name="participantName" (focus)="participantName.value=''" >
             <datalist id="participants"></datalist>
         </div>
         <button (click)="generateReport()" class="btn btn-primary">Generuj raport</button>
     </form>
 </div>
 
-<ul class="list-group">
-    <li class="list-group-item" *ngFor="let work of participantWorks;">
-        Nazwa pracy: {{work.name}}, typ: {{work.type}}. Zdjęcie:
-        <img src="{{work.photoUrl}}">
-    </li>
-</ul>
 
-<ul class="list-group">
-    <li class="list-group-item" *ngFor="let achievement of participantAchievements;">
-        Nazwa osiągnięcia: {{achievement.name}}, typ: {{achievement.type}}, data: {{achievement.date}}
-    </li>
-</ul>
 
-<ul class="list-group">
-    <li class="list-group-item" *ngFor="let presence of participantPresences;">
-        Data: {{presence.date}}, obecny: {{presence.isPresent}}.
-    </li>
+
+
+
+
+<p class="font-weight-bold">Raport obecności</p>
+<table class="table">
+    <ul class="list-group">
+    <li class="list-group-item">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Data</th>
+        <th scope="col">Obecność</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let presence of participantPresences; let i = index;">
+        <th scope="row"> {{i+1}}</th>
+        <td>{{getDateString(presence?.date)}} </td>
+        <td>{{presence.isPresent}} </td>  
+      </tr>
+    </tbody>
+</li>
 </ul>
+  </table>
+
+
+  <p class="font-weight-bold">Raport osiągnięć</p>
+<table class="table">
+    <ul class="list-group">
+    <li class="list-group-item">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Data</th>
+        <th scope="col">Nazwa osiągnięcia</th>
+        <th scope="col">Typ osiągnięcia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let achievement of participantAchievements; let i = index;">
+        <th scope="row"> {{i+1}}</th>
+        <td>{{getDateString(achievement?.date)}} </td>
+        <td>{{achievement.name}} </td> 
+        <td>{{achievement.type}} </td> 
+      </tr>
+    </tbody>
+</li>
+</ul>
+  </table>
+
+
+  <p class="font-weight-bold">Raport prac</p>
+  <table class="table">
+      <ul class="list-group">
+      <li class="list-group-item">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nazwa pracy</th>
+          <th scope="col">Typ pracy</th>
+          <th scope="col">Zdjęcie</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let work of participantWorks; let i = index;">
+          <th scope="row"> {{i+1}}</th>
+          <td>{{work.name}} </td>
+          <td>{{work.type}} </td> 
+          <td> <div class="img-thumbnail">
+        <img src="{{work.photoUrl}}"  width="150" height="150">
+        </div> </td> 
+        </tr>
+      </tbody>
+  </li>
+  </ul>
+    </table>

@@ -1,7 +1,25 @@
+<div class="col-6 card-title align-self-center mb-0">
 <button (click)="generateReport()" class="btn btn-primary">Generuj raport</button>
+</div>
 
-<ul class="list-group">
-    <li class="list-group-item" *ngFor="let ach of mostAchievements; index as i;">
-        {{i+1}}. Imię i nazwisko: {{ach.name}}, liczba osiągnięć: {{ach.number}}
-    </li>
+
+<table class="table">
+    <ul class="list-group">
+    <li class="list-group-item">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Imię i nazwisko</th>
+        <th scope="col">Liczba osiągnięć</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ach of mostAchievements; let i = index;">
+        <th scope="row"> {{i+1}}</th>
+        <td>{{ach.name}} </td>
+        <td>{{ach.number}} </td>
+      </tr>
+    </tbody>
+</li>
 </ul>
+  </table>

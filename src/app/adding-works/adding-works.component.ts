@@ -153,6 +153,9 @@ export class AddingWorksComponent implements OnInit {
         (response: Participant[]) => {
           this.participants = response;
           const list = document.getElementById('participants');
+          while (list?.firstChild) {
+            list?.removeChild(list?.firstChild);
+          }
           for (let index = 0; index < this.participants.length; index++) {
             let option = document.createElement('option');
             option.value = this.participants[index].name;
@@ -176,6 +179,9 @@ export class AddingWorksComponent implements OnInit {
         (response: Participant[]) => {
           this.participants = response;
           const list = document.getElementById('participants');
+          while (list?.firstChild) {
+            list?.removeChild(list?.firstChild);
+          }
           for (let index = 0; index < this.participants.length; index++) {
             let option = document.createElement('option');
             option.value = this.participants[index].name;

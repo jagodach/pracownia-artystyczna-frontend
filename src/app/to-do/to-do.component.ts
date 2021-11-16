@@ -6,6 +6,9 @@ import { ParticipantService } from '../adding-participants/participant.service';
 import { ToDo } from './to-do';
 import { ToDoService } from './to-do.service';
 import { ToDoDto } from './todoDto';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-to-do',
@@ -19,7 +22,9 @@ export class ToDoComponent implements OnInit {
   public participants: Participant[];
 
   constructor(private todoService: ToDoService,
-    private participantService: ParticipantService) { 
+    private participantService: ParticipantService,
+    private router: Router,
+    private toastr: ToastrService) { 
     this.todos = [];
     this.editToDo = {} as ToDo;
     this.deleteToDo = {} as ToDo;
@@ -27,18 +32,25 @@ export class ToDoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllToDo();
-    
+    if (localStorage.getItem('token') == null){
+      this.router.navigate(['/main']);
+    }
+    else {
+      this.getAllToDo();
+    }
   }
 
   public getAllParticipants(): void{
     this.participantService.getAllParticipant().subscribe(
   (response: Participant[]) => {
     this.participants = response;
+    this.participants.sort();
     console.log(this.participants);
   },
   (error: HttpErrorResponse) =>{
-    alert(error.message);
+    this.toastr.error('', 'Nie udało się pobrać uczestników', {
+      progressBar : true
+    });
   }
   );
   }
@@ -47,10 +59,21 @@ export class ToDoComponent implements OnInit {
     this.todoService.getAllToDo().subscribe(
       (response: ToDo[]) => {
       this.todos = response;
+      this.todos = this.todos.sort(function sort(a: ToDo, b: ToDo): number {
+        if (a.message < b.message){
+          return -1;
+        }
+        else if (a.message > b.message){
+          return 1;
+        }
+        return 0; 
+      })
       console.log(this.todos);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Nie udało się pobrać zadań do wykonania', {
+          progressBar : true
+        });
       }
     );
   }
@@ -63,22 +86,26 @@ export class ToDoComponent implements OnInit {
         this.getAllToDo();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Wypełnij poprawnie formularz dodawania zadania do wykonania', {
+          progressBar : true
+        });
       }
     );
   }
 
-  public onUpdateToDo(todo: ToDo): void {
+  public onUpdateToDo(todo: ToDo, id: number): void {
     delete todo.toDoCode;
     let todoDto: ToDoDto = todo;
-    console.log(todo);
+    todoDto.id = id;
     this.todoService.updateToDo(todo).subscribe(
       (response: ToDoDto) => {
         console.log(response);
         this.getAllToDo();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Wypełnij poprawnie formularz edytowania zadania do wykonania', {
+          progressBar : true
+        });
       }
     );
   }
@@ -90,7 +117,9 @@ export class ToDoComponent implements OnInit {
         this.getAllToDo();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Usuwanie zadania do wykonania nie powiodło się', {
+          progressBar : true
+        });
       }
     );
   }
@@ -124,17 +153,23 @@ export class ToDoComponent implements OnInit {
   (response: Participant[]) => {
     this.participants = response;
     const list = document.getElementById('participants');
+    while (list?.firstChild) {
+      list?.removeChild(list?.firstChild);
+    }
     for (let index = 0; index < this.participants.length; index++) {
       let option = document.createElement('option');
       option.value = this.participants[index].name;
       list?.appendChild(option);
+      
     }
+    
   },
   (error: HttpErrorResponse) => {
-    alert(error.message);
+    this.toastr.error('', 'Błąd', {
+      progressBar : true
+    });
   }
 );
-
     }
     if(mode == 'edit'){
       this.editToDo=todo;
@@ -144,6 +179,9 @@ export class ToDoComponent implements OnInit {
       (response: Participant[]) => {
         this.participants = response;
         const list = document.getElementById('participants');
+        while (list?.firstChild) {
+          list?.removeChild(list?.firstChild);
+        }
         for (let index = 0; index < this.participants.length; index++) {
           let option = document.createElement('option');
           option.value = this.participants[index].name;
@@ -151,7 +189,9 @@ export class ToDoComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Błąd', {
+          progressBar : true
+        });
       }
     );
       }

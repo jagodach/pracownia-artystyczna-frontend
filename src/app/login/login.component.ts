@@ -6,6 +6,9 @@ import { LoginResponse } from './LoginResponse';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-login',
@@ -16,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService,
     private jwtHelper :JwtHelperService,
-    private router: Router) { }
+    private router: Router,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
 
@@ -35,7 +39,9 @@ export class LoginComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error('', 'Niepoprawny email lub hasło', {
+          progressBar : true
+        });
       }
     );
   }

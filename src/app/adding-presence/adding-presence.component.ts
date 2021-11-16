@@ -152,6 +152,9 @@ this.participantService.getAllParticipant().subscribe(
   (response: Participant[]) => {
     this.participants = response;
     const list = document.getElementById('participants');
+    while (list?.firstChild) {
+      list?.removeChild(list?.firstChild);
+    }
     for (let index = 0; index < this.participants.length; index++) {
       let option = document.createElement('option');
       option.value = this.participants[index].name;
@@ -173,6 +176,9 @@ this.participantService.getAllParticipant().subscribe(
         (response: Participant[]) => {
           this.participants = response;
           const list = document.getElementById('participants');
+          while (list?.firstChild) {
+            list?.removeChild(list?.firstChild);
+          }
           for (let index = 0; index < this.participants.length; index++) {
             let option = document.createElement('option');
             option.value = this.participants[index].name;
@@ -196,6 +202,9 @@ this.participantService.getAllParticipant().subscribe(
         button.click();
     }
 
+    public getDateString(date: Date) : string{
+      return new Date(date).toLocaleDateString();
+    }
 
 
 }

@@ -156,11 +156,16 @@ export class AddingAchievementsComponent implements OnInit {
         (response: Participant[]) => {
           this.participants = response;
           const list = document.getElementById('participants');
+          while (list?.firstChild) {
+            list?.removeChild(list?.firstChild);
+          }
           for (let index = 0; index < this.participants.length; index++) {
             let option = document.createElement('option');
             option.value = this.participants[index].name;
             list?.appendChild(option);
+            
           }
+          
         },
         (error: HttpErrorResponse) => {
           this.toastr.error('', 'Błąd', {
@@ -178,6 +183,9 @@ export class AddingAchievementsComponent implements OnInit {
         (response: Participant[]) => {
           this.participants = response;
           const list = document.getElementById('participants');
+          while (list?.firstChild) {
+            list?.removeChild(list?.firstChild);
+          }
           for (let index = 0; index < this.achievements.length; index++) {
             let option = document.createElement('option');
             option.value = this.participants[index].name;
@@ -203,6 +211,8 @@ export class AddingAchievementsComponent implements OnInit {
     button.click();
   }
 
-
+  public getDateString(date: Date) : string{
+    return new Date(date).toLocaleDateString();
+  }
 
 }

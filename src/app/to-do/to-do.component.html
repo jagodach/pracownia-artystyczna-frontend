@@ -59,7 +59,7 @@
               <div class="form-participant">
                <label for="participant">Uczestnik</label>
                <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Uczestnik"
-                  required>
+                  required >
                <datalist id="participants"></datalist>
             </div>
 
@@ -77,35 +77,35 @@
   
       <!-- Edit Modal -->
   <div class="modal fade" id="updateToDoModal" tabindex="-1" role="dialog" aria-labelledby="todoEditModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title" id="updateToDoModalLabel">Edytowanie zadania do wykonania {{editToDo?.message}}</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
-            <div class="modal-body">
-               <form #editForm="ngForm">
-                  <div class="form-group">
-                     <label for="message">Wiadomość</label>
-                     <input type="text" ngModel="{{editToDo?.message}}" name="message" class="form-control" id="message" aria-describedby="emailHelp" placeholder="Wiadomość">
-                  </div>
-                  <div class="form-participant">
-                     <label for="participant">Uczestnik</label>
-                     <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Uczestnik"
-                        required>
-                     <datalist id="participants"></datalist>
-                  </div>
-                  <div class="modal-footer">
-                     <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Zamknij</button>
-                     <button (click)="onUpdateToDo(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Zapisz</button>
-                  </div>
-               </form>
-            </div>
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="updateToDoModalLabel">Edytowanie zadania do wykonania {{editToDo?.message}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #editForm="ngForm">
+               <div class="form-group">
+                  <label for="message">Wiadomość</label>
+                  <input type="text" ngModel="{{editToDo?.message}}" name="message" class="form-control" id="message" aria-describedby="emailHelp" placeholder="Wiadomość">
+               </div>
+               <div class="form-participant">
+                  <label for="participant">Uczestnik</label>
+                  <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Uczestnik"
+                     required>
+                  <datalist id="participants"></datalist>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Zamknij</button>
+                  <button (click)="onUpdateToDo(editForm.value, editToDo?.id)" data-dismiss="modal" class="btn btn-primary" >Zapisz</button>
+               </div>
+            </form>
          </div>
       </div>
-    </div>
+   </div>
+ </div>
   
   
   

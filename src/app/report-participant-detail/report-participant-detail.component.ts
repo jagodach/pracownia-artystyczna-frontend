@@ -134,4 +134,10 @@ export class ReportParticipantDetailComponent implements OnInit {
       }
     )
   }
+
+  public getDateString(date: Date) : string{
+    return new Date(date).toLocaleDateString();
+  }
+
+
 }

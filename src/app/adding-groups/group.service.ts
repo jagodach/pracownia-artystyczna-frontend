@@ -25,6 +25,6 @@ export class GroupService {
   }
 
   public deleteGroup(groupId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/work/group/${groupId}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/group/delete/${groupId}`);
   }
 }

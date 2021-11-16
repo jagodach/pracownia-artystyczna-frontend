@@ -1,171 +1,193 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarColor03">
-       <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-              <a class="nav-link" (click)="onOpenModal(null, 'add')">Dodaj obecność <span class="sr-only">(current)</span></a>
-          </li>
-       </ul>
-       <form class="form-inline my-2 my-lg-0">
-          <input type="search" (ngModelChange)="searchPresences(key.value)" #key="ngModel" ngModel
-          name= "key" id="searchName" class="form-control mr-sm-2" placeholder="Wyszukaj..." required>
-       </form>
-    </div>
-  </nav>
-  
-  
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-  <div class="container" id="main.container">
-      <div class="row">
-          <div *ngFor="let presence of presences" class="col-md-6 col-xl-3">
-              <div class="card m-b-30">
-                  <div class="card-body row">
-                      <div class="col-6 card-title align-self-center mb-0">
-                          <h5>{{presence?.isPresent}}</h5>
-                          <p class="m-0">Uczestnik: {{presence?.participant}}</p>
-                      </div> 
-                  </div>
-                  <ul class="list-group list-group-flush">
-                     <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Obecność : {{presence?.isPresent}}</li>
-                 </ul>
-                  <ul class="list-group list-group-flush">
-                      <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Data : {{presence?.date}}</li>
-                  </ul>
-                  <div class="card-body">
-                      <div class="float-right btn-group btn-group-sm">
-                          <a (click)="onOpenModal(presence, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
-                          <a (click)="onOpenModal(presence, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
-                    
-              </div>
-          </div>
-          
-         
-     
-  
-          <!-- Add Presence Modal -->
-  <div class="modal fade" id="addPresenceModal" tabindex="-1" role="dialog" aria-labelledby="addPresenceModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-           <div class="modal-header">
-              <h5 class="modal-title" id="addPresenceModalLabel">Dodawanie obecności</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              </button>
-           </div>
-           <div class="modal-body">
-              <form #addForm="ngForm" (ngSubmit)="onAddPresence(addForm)">
-               <div class="form-participant">
-                  <label for="participant">Uczestnik</label>
-                  <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Uczestnik"
-                     required>
-                  <datalist id="participants"></datalist>
-               </div>
-              <div class="form-group">
-                 <label for="isPresent">Obecność</label>
-                 <input type="presences" list="presences" ngModel name="isPresent" class="form-control" id="isPresent" placeholder="Obecność" required>
-                 <datalist id="presences">
-                    <option value="obecny">
-                    <option value="nieobecny">
-                 </datalist>
-              </div>
-              <div class="form-group">
-                 <label for="date">Data</label>
-                 <input type="date" ngModel name="date" class="form-control" id="date" placeholder="Date"  required>
-                 
-              </div>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
+      aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+   </button>
+   <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav mr-auto">
+         <li class="nav-item active">
+            <a class="nav-link" (click)="onOpenModal(null, 'add')">Dodaj obecność <span
+                  class="sr-only">(current)</span></a>
+         </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+         <input type="search" (ngModelChange)="searchPresences(key.value)" #key="ngModel" ngModel name="key"
+            id="searchName" class="form-control mr-sm-2" placeholder="Wyszukaj..." required>
+      </form>
+   </div>
+</nav>
 
-              <div class="modal-footer">
-                 <button type="button" id="add-presence-form" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                 <button (click)="onAddPresence(addForm)" data-dismiss="modal" class="btn btn-primary" >Zapisz</button>
-              </div>
-              </form>
-           </div>
-        </div>
-      </div>
-      </div>
-  
-  
-  
-      <!-- Edit Modal -->
-  <div class="modal fade" id="updatePresenceModal" tabindex="-1" role="dialog" aria-labelledby="presenceEditModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title" id="updatePresenceModalLabel">Edytowanie obecności {{editPresence?.isPresent}}</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
-            <div class="modal-body">
-               <form #editForm="ngForm">
 
-                
-                             
-
-                  <div class="form-group">
-                     <label for="isPresent">Obecność</label>
-                     <input type="presences" list="presences" ngModel="{{editPresence?.isPresent}}" name="isPresent" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Obecność">
-                     <datalist id="presences">
-                        <option value="obecny">
-                        <option value="nieobecny">
-                     </datalist>
-                  </div>
-                  <input type="hidden" ngModel="{{editPresence?.id}}" name="id" class="form-control" id="id" placeholder="Email">
-                  <input type="hidden" ngModel="{{editPresence?.presenceCode}}" name="presenceCode" class="form-control" id="presenceCode" placeholder="Email">
-                  <div class="form-group">
-                     <label for="date">Data</label>
-                     <input type="date" ngModel="{{editPresence?.date}}" name="date" class="form-control" id="date" placeholder="Data">
-                  </div>
-                  
-                  <div class="form-participant">
-                     <label for="participant">Uczestnik</label>
-                     <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Uczestnik"
-                        required>
-                     <datalist id="participants"></datalist>
-                  </div>
-                  <div class="modal-footer">
-                     <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Zamknij</button>
-                     <button (click)="onUpdatePresence(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Zapisz</button>
-                  </div>
-               </form>
-            </div>
-         </div>
-      </div>
-    </div>
-  
-  
-  
-  
-    <!-- Delete Modal -->
-  <div class="modal fade" id="deletePresenceModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title" id="deleteModelLabel">Usuwanie obecności</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
-            <div class="modal-body">
-               <p>Jesteś pewny, ze chcesz usunąć obecność? {{deletePresence?.id}}?</p>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie</button>
-                  <button (click)="onDeletePresence(deletePresence?.id)" class="btn btn-danger" data-dismiss="modal">Tak</button>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" id="main.container">
+   <div class="row">
+      <div *ngFor="let presence of presences" class="col-md-6 col-xl-3">
+         <div class="card m-b-30">
+            <div class="card-body row">
+               <div class="col-6 card-title align-self-center mb-0">
+                  <h5>{{presence?.isPresent}}</h5>
+                  <p class="m-0">Uczestnik: {{presence?.participant}}</p>
                </div>
             </div>
+            <ul class="list-group list-group-flush">
+               <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Obecność : {{presence?.isPresent}}
+               </li>
+            </ul>
+            <ul class="list-group list-group-flush">
+               <li class="list-group-item"><i class="fa fa-envelope float-right"></i><p>Data : {{getDateString(presence?.date)}}</p>
+               </li>
+             
+            </ul>
+            <div class="card-body">
+               <div class="float-right btn-group btn-group-sm">
+                  <a (click)="onOpenModal(presence, 'edit')" class="btn btn-primary tooltips" data-placement="top"
+                     data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                  <a (click)="onOpenModal(presence, 'delete')" class="btn btn-secondary tooltips" data-placement="top"
+                     data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+
+               </div>
+            </div>
+
+
+
+
+            <!-- Add Presence Modal -->
+            <div class="modal fade" id="addPresenceModal" tabindex="-1" role="dialog"
+               aria-labelledby="addPresenceModalLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="addPresenceModalLabel">Dodawanie obecności</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <form #addForm="ngForm" (ngSubmit)="onAddPresence(addForm)">
+                           <div class="form-participant">
+                              <label for="participant">Uczestnik</label>
+                              <input type="text" list="participants" ngModel name="participant" class="form-control"
+                                 id="participant" placeholder="Uczestnik" required >
+                              <datalist id="participants"></datalist>
+                           </div>
+                           <div class="form-group">
+                              <label for="isPresent">Obecność</label>
+                              <input type="presences" list="presences" ngModel name="isPresent" class="form-control"
+                                 id="isPresent" placeholder="Obecność" required >
+                              <datalist id="presences">
+                                 <option value="obecny">
+                                 <option value="nieobecny">
+                              </datalist>
+                           </div>
+                           <div class="form-group">
+                              <label for="date">Data</label>
+                              <input type="date" ngModel name="date" class="form-control" id="date" placeholder="Date"
+                                 required>
+
+                           </div>
+
+                           <div class="modal-footer">
+                              <button type="button" id="add-presence-form" class="btn btn-secondary"
+                                 data-dismiss="modal">Anuluj</button>
+                              <button (click)="onAddPresence(addForm)" data-dismiss="modal"
+                                 class="btn btn-primary">Zapisz</button>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+
+            <!-- Edit Modal -->
+            <div class="modal fade" id="updatePresenceModal" tabindex="-1" role="dialog"
+               aria-labelledby="presenceEditModalLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="updatePresenceModalLabel">Edytowanie obecności
+                           {{editPresence?.isPresent}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <form #editForm="ngForm">
+
+
+
+
+                           <div class="form-group">
+                              <label for="isPresent">Obecność</label>
+                              <input type="presences" list="presences" ngModel="{{editPresence?.isPresent}}"
+                                 name="isPresent" class="form-control" id="name" aria-describedby="emailHelp"
+                                 placeholder="Obecność" >
+                              <datalist id="presences">
+                                 <option value="obecny">
+                                 <option value="nieobecny">
+                              </datalist>
+                           </div>
+                           <input type="hidden" ngModel="{{editPresence?.id}}" name="id" class="form-control" id="id"
+                              placeholder="Email">
+                           <input type="hidden" ngModel="{{editPresence?.presenceCode}}" name="presenceCode"
+                              class="form-control" id="presenceCode" placeholder="Email">
+                           <div class="form-group">
+                              <label for="date">Data</label>
+                              <input type="date" ngModel="{{editPresence?.date}}" name="date" class="form-control"
+                                 id="date" placeholder="Data">
+                           </div>
+
+                           <div class="form-participant">
+                              <label for="participant">Uczestnik</label>
+                              <input type="text" list="participants" ngModel name="participant" class="form-control"
+                                 id="participant" placeholder="Uczestnik" required >
+                              <datalist id="participants"></datalist>
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" id="" data-dismiss="modal"
+                                 class="btn btn-secondary">Zamknij</button>
+                              <button (click)="onUpdatePresence(editForm.value)" data-dismiss="modal"
+                                 class="btn btn-primary">Zapisz</button>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+
+
+            <!-- Delete Modal -->
+            <div class="modal fade" id="deletePresenceModal" tabindex="-1" role="dialog"
+               aria-labelledby="deleteModelLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModelLabel">Usuwanie obecności</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <p>Jesteś pewny, ze chcesz usunąć obecność? {{deletePresence?.id}}?</p>
+                        <div class="modal-footer">
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie</button>
+                           <button (click)="onDeletePresence(deletePresence?.id)" class="btn btn-danger"
+                              data-dismiss="modal">Tak</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
          </div>
-      </div>
-    </div>
-    </div>
-  
-  
-    <!-- Notification for no participants -->
-  <div *ngIf="presences?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
-      <div class="alert alert-info" role="alert">
-        <h4 class="alert-heading">Brak obecności</h4>
-        <p>Zadna obecność nie została znaleziona</p>
-      </div>
-      </div>
-  
+
+
+         <!-- Notification for no participants -->
+         <div *ngIf="presences?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+            <div class="alert alert-info" role="alert">
+               <h4 class="alert-heading">Brak obecności</h4>
+               <p>Zadna obecność nie została znaleziona</p>
+            </div>
+         </div>

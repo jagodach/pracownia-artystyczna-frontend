@@ -40,10 +40,10 @@ public getAllGroup(): void {
     (response: Group[]) => {
     this.groups = response;
     this.groups = this.groups.sort(function sort(a: Group, b: Group): number {
-      if (a.name < b.name){
+      if (a.number < b.number){
         return -1;
       }
-      else if (a.name > b.name){
+      else if (a.number > b.number){
         return 1;
       }
       return 0;

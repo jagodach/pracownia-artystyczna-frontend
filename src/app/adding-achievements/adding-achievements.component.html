@@ -29,7 +29,7 @@
                   </div>
                   <ul class="list-group list-group-flush">
                       <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Osiągnięcie : {{achievement?.type}}</li>
-                      <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Data odbycia się konkursu : {{achievement?.date}}</li>
+                      <li class="list-group-item"><i class="fa fa-envelope float-right"></i><p>Data odbycia się konkursu: {{getDateString(achievement.date)}}</p></li> 
                   </ul>
                   <div class="card-body">
                       <div class="float-right btn-group btn-group-sm">
@@ -56,11 +56,11 @@
               <form #addForm="ngForm" (ngSubmit)="onAddAchievement(addForm)">
               <div class="form-group">
                  <label for="name">Nazwa: </label>
-                 <input type="text" ngModel name="name" class="form-control" id="name" placeholder="Nazwa" required>
+                 <input type="text" ngModel name="name" class="form-control" id="name" placeholder="Nazwa" required >
               </div>
               <div class="form-group">
                  <label for="type">Typ osiągnięcia: </label>
-                 <input type="achievements" list="achievements" ngModel name="type" class="form-control" id="type" placeholder="Typ" required>
+                 <input type="achievements" list="achievements" ngModel name="type" class="form-control" id="type" placeholder="Typ" required >
                  <datalist id="achievements">
                   <option value="1 miejsce">
                   <option value="2 miejsce">
@@ -130,7 +130,7 @@
                   <div class="form-participant">
                      <label for="participant">Uczestnik</label>
                      <input type="text" list="participants" ngModel name="participant" class="form-control" id="participant" placeholder="Uczestnik"
-                        required>
+                        required >
                      <datalist id="participants"></datalist>
                   </div>
                   <div class="form-group">
